@@ -16,10 +16,12 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("BootMenu.fxml"));
+
         primaryStage.setMinWidth(800);
         primaryStage.setMinHeight(600);
         primaryStage.setTitle("GEIA SOU FILEEE");
-        primaryStage.setScene(new Scene(root, 800, 600));
+        Scene scene = new Scene(root, 800, 600);
+        primaryStage.setScene(scene);
         primaryStage.show();
         System.out.println("This is a String");
     }
