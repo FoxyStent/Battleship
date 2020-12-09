@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0"
+      style="-fx-background-image: url(&quot;/battleship/assets/BootMenuImage.jpg&quot;); -fx-background-size: cover;"
+      xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="battleship.BootMenu" fx:id="root">
+   <children>
+      <Label id="welcome" prefHeight="0.0" prefWidth="64.0" text="Welcome to">
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </Label>
+      <Label id="battleship" text="Battleship" />
+      <HBox alignment="CENTER">
+         <children>
+            <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+            <Button id="playButton" fx:id="playButton" alignment="CENTER" mnemonicParsing="false" onAction="#playGame" prefHeight="50.0" prefWidth="100.0" text="Play" />
+            <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+            <Button id="settingsButton" mnemonicParsing="false" onAction="#settingsEdit" prefHeight="50.0" prefWidth="100.0" text="Settings" />
+            <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+         </children>
+      </HBox>
+   </children>
+</VBox>
