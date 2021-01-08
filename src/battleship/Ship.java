@@ -25,13 +25,13 @@ public class  Ship{
     }
 
     public void place(int X1, int Y1, int or) throws OversizeException {
+        if (or == 1 && Y1 + this.size > 10)
+            throw new OversizeException(this.Name + " is exceeding the Grid horizontally." + (X1 + this.size));
+        else if (or == 2 && X1 + this.size > 10)
+            throw new OversizeException(this.Name + " is exceeding the Grid");
         this.StartingX = X1;
         this.StartingY = Y1;
         this.orientation = or;
-        if (or == 1 && Y1 + this.size > 10)
-            throw new OversizeException(this.Name + " is exceeding the Grid horizontally." + Integer.toString(X1+this.size));
-        else if (or == 2 && X1 + this.size > 10)
-            throw new OversizeException(this.Name + " is exceeding the Grid");
     }
 
     public int getHitPoints(){

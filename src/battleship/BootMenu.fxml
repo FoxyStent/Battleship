@@ -1,25 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox fx:id="root" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-image: url(&quot;/battleship/assets/BootMenuImage.jpg&quot;); -fx-background-size: cover;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="battleship.BootMenu">
-   <children>
-      <Label id="welcome" style="-fx-font-size: 30px;" text="Welcome to" textFill="WHITE">
-         <VBox.margin>
-            <Insets />
-         </VBox.margin>
-      </Label>
-      <Label id="battleship" style="-fx-font-size: 40px; -fx-effect: dropshadow(gaussian, black, 5, 20, -2, 2);" text="Battleship" textFill="WHITE" />
-      <HBox alignment="CENTER">
-         <children>
-            <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-            <Button id="playButton" fx:id="playButton" alignment="CENTER" mnemonicParsing="false" onAction="#playGame" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #6d97b0, #2d6f96); -fx-font-size: 15px; -fx-text-fill: #ffffff;" text="Play" />
-            <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-            <Button id="settingsButton" mnemonicParsing="false" onAction="#settingsEdit" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #6d97b0, #2d6f96); -fx-font-size: 15px; -fx-text-fill: #ffffff;" text="Settings" />
-            <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-         </children>
-      </HBox>
-   </children>
+<VBox id="root" fx:id="root" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
+      prefWidth="800.0" stylesheets="@../stylesheet.css" xmlns="http://javafx.com/javafx/11.0.2"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="battleship.BootMenu">
+   <Label id="battleship" style="-fx-font-size: 40px; -fx-effect: dropshadow(gaussian, black, 5, 20, -2, 2);"
+          text="Battleship" textFill="WHITE"/>
+   <HBox alignment="CENTER">
+      <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS"/>
+      <Button id="playButton" fx:id="playButton" alignment="CENTER" mnemonicParsing="false" onAction="#playGame"
+              prefHeight="60.0" prefWidth="125.0" text="Play"/>
+      <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS"/>
+      <Button id="settingsButton" mnemonicParsing="false" onAction="#settingsEdit" prefHeight="60.0"
+              prefWidth="125.0" text="Settings"/>
+      <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS"/>
+   </HBox>
 </VBox>
