@@ -1,7 +1,3 @@
-.root{
-    -fx-background-image: url("battleship/assets/978648.jpg");
-    -fx-background-size: cover;
-}
 
 .button{
     -fx-background-color:  linear-gradient(from 0% 0% to 0% 100%, #6d97b0, #2d6f96);
@@ -14,6 +10,16 @@
 }
 .button:hover {
     -fx-background-color:  linear-gradient(from 0% 0% to 0% 100%, #3d6781, #1e3967);
+}
+
+.grid-tile {
+    -fx-background-color: cyan;
+    -fx-border-color: black
+}
+
+.grid-tile:hover {
+    -fx-background-color: black;
+
 }
 
 .button:pressed {

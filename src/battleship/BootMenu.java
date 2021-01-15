@@ -4,22 +4,33 @@ import battleship.exce.OversizeException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.awt.*;
+import java.io.*;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Optional;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 
-public class BootMenu {
+public class BootMenu{
+
+    @FXML
+    public VBox root;
     @FXML
     private Button playButton;
     @FXML
@@ -35,7 +46,7 @@ public class BootMenu {
         if (enemyScen == -1)
             path += "default.txt";
         else
-            path += Integer.toString(enemyScen) + ".txt";
+            path += enemyScen + ".txt";
         File PlayerDescription = new File(path);
         Scanner reader = new Scanner(PlayerDescription);
         String[] tokens;
@@ -87,6 +98,7 @@ public class BootMenu {
             ButtonType cont = new ButtonType("Continue with Defaults");
             invalidScenario.getButtonTypes().setAll(cont, choose, exit);
             Optional<ButtonType> result = invalidScenario.showAndWait();
+            //noinspection OptionalGetWithoutIsPresent
             if (result.get() == choose) {
                 settingsEdit(event);
                 return;
@@ -105,9 +117,9 @@ public class BootMenu {
             alert.showAndWait();
             return;
         }
-        BorderPane game = FXMLLoader.load(getClass().getResource("GameGrid.fxml"));
+
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(new Scene(game, 800, 600));
+        changeScene(window);
     }
 
     public void settingsEdit(ActionEvent actionEvent) throws Exception {
@@ -116,5 +128,26 @@ public class BootMenu {
         playerScen = Integer.parseInt(res.split(",")[0]);
         enemyScen = Integer.parseInt(res.split(",")[1]);
         System.out.println(res);
+    }
+
+    public void changeScene(Stage window) throws IOException {
+        StackPane sp = new StackPane();
+        GridPane game = FXMLLoader.load(getClass().getResource("GameGrid.fxml"));
+
+        Image img = new Image(new FileInputStream("src/battleship/assets/978648.jpg"));
+        ImageView imgView= new ImageView(img);
+        imgView.fitWidthProperty().bind(window.widthProperty());
+        imgView.fitHeightProperty().bind(window.heightProperty());
+        imgView.setOpacity(0.5);
+
+        Region reg = new Region();
+        reg.setPrefHeight(600);
+        reg.setPrefWidth(800);
+        reg.setDisable(true);
+        reg.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+        reg.setOpacity(0.0);
+
+        sp.getChildren().addAll(imgView, game, reg);
+        window.setScene(new Scene(sp, 800, 600));
     }
 }

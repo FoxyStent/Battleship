@@ -10,10 +10,9 @@ import java.util.Scanner;
 public class Player {
     public int score;
     public int shipsLeft;
-    private int scenarioID;
-    private boolean isEnemy;
+    private final int scenarioID;
+    private final boolean isEnemy;
     public Ship[] playerShips;
-    enum Type {CARRIER, BATTLESHIP, CRUISER, SUBMARINE, DESTROYER};
 
     public Player(boolean en, int scenario_id) throws IOException, OversizeException {
         this.scenarioID = scenario_id;
@@ -33,7 +32,7 @@ public class Player {
         if (scenarioID == -1)
             path += "default.txt";
         else
-            path += Integer.toString(scenarioID) + ".txt";
+            path += scenarioID + ".txt";
 
         File PlayerDescription = new File(path);
         Scanner reader = new Scanner(PlayerDescription);
@@ -87,9 +86,9 @@ public class Player {
         return this.score;
     }
 
-    public Ship getPlayerShips(Type type) {
-        return playerShips[type.ordinal()];
-    }
+    //public Ship getPlayerShips(Type type) {
+        //return playerShips[type.ordinal()];
+    //}
 
     public Move dropABomb(int X, int Y){
         return new Move(X,Y);

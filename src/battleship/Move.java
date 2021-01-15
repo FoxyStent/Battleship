@@ -6,10 +6,12 @@ public class Move {
     public Pair<Integer, Integer> Bomb;
     public int PointsAwarded;
     boolean sunkShip;
+    boolean hit;
 
     public Move(int x, int y){
-        this.Bomb = new Pair<Integer, Integer>(x,y);
+        this.Bomb = new Pair<>(x, y);
         sunkShip = false;
+        hit = false;
     }
 
     public Pair<Integer, Integer> getBomb() {
@@ -30,6 +32,10 @@ public class Move {
 
     public void setSunkShip(boolean sunkShip) {
         this.sunkShip = sunkShip;
+    }
+
+    public void setHit(){
+        this.hit = true;
     }
 
     public boolean isSunkShip() {

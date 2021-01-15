@@ -1,7 +1,10 @@
 package battleship;
 
-import javafx.scene.layout.Region;
+import javafx.geometry.Insets;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
 /*
@@ -23,7 +26,7 @@ public class GridTile extends Rectangle {
         this.color = Color.BLUE;
     }
 */
-public class GridTile extends Region {
+public class GridTile extends StackPane {
     public int x;
     public int y;
     private boolean hasShip;
@@ -33,8 +36,21 @@ public class GridTile extends Region {
 
     public GridTile(int i, int j, boolean enemy){
         super();
-        this.setStyle("-fx-background-color: cyan; -fx-border-color: black");
+        this.getStyleClass().clear();
+        this.getStyleClass().add("grid-tile");
         super.setMinSize(30.0, 30.0);
+        setBackground(new Background(new BackgroundFill(Color.CYAN, CornerRadii.EMPTY, Insets.EMPTY)));
+        if (j==10)
+            if (i==10)
+                setStyle("-fx-border-width: 1px 1px 1px 1px; -fx-border-color:black black black black");
+            else
+                setStyle("-fx-border-width: 1px 1px 0px 1px; -fx-border-color:black black black black");
+        else if (i==10)
+            setStyle("-fx-border-width: 1px 0px 1px 1px; -fx-border-color:black black black black");
+        else
+            setStyle("-fx-border-width: 1px 0px 0px 1px; -fx-border-color:black black black black");
+        setOnMouseEntered(mouseEvent -> setBackground(new Background(new BackgroundFill(Color.rgb(0,100,100, 0.7), CornerRadii.EMPTY, Insets.EMPTY))));
+        setOnMouseExited(mouseEvent -> setBackground(new Background(new BackgroundFill(Color.CYAN, CornerRadii.EMPTY, Insets.EMPTY))));
         this.x = i;
         this.y = j;
         this.isHit = false;
@@ -45,9 +61,20 @@ public class GridTile extends Region {
     public void placeShips(int part, String name){
 
     }
+    public void setHasShip(boolean s){
+        this.hasShip = s;
+        this.setOnMouseEntered(mouseEvent -> {});
+        this.setOnMouseExited(mouseEvent -> {});
+    }
 
     public void placeBomb(){
-        this.setStyle("-fx-background-color: red");
+        isHit = true;
+        Circle bomb = new Circle(10);
+        bomb.setFill(Paint.valueOf("fff"));
+        bomb.setStroke(Paint.valueOf("000"));
+        //bomb.setStrokeWidth(0.5);
+        this.getChildren().add(bomb);
+        //this.setStyle("-fx-background-color: red");
     }
 
     public boolean isHasShip() {
