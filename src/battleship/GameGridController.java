@@ -207,6 +207,7 @@ public class GameGridController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Now Running Initializing");
+        //Adding Labels
         for (int i=1; i<11; i++) {
             leftGrid.add(new Label(Integer.toString(i)), i, 0);
             leftGrid.add(new Label(Integer.toString(i)), 0, i);
@@ -214,6 +215,7 @@ public class GameGridController implements Initializable {
             rightGrid.add(new Label(Integer.toString(i)), 0, i);
 
         }
+        //Adding Grid Tiles
         for (int i=1; i<11; i++) {
             for (int j = 1; j < 11; j++) {
                 GridTile friendlyTile = new GridTile(i, j, false);

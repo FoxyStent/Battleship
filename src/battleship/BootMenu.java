@@ -7,15 +7,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.awt.*;
@@ -123,11 +126,33 @@ public class BootMenu{
     }
 
     public void settingsEdit(ActionEvent actionEvent) throws Exception {
+        Stage set = new Stage();
+
+        set.initModality(Modality.APPLICATION_MODAL);
+        set.setTitle("Settings");
+        set.setMinWidth(400);
+        set.setMinHeight(300);
+
+        StackPane sp = new StackPane();
+        Parent root = FXMLLoader.load(getClass().getResource("Settings.fxml"));
+        Image img = new Image(new FileInputStream("src/battleship/assets/978648.jpg"));
+        ImageView imgView= new ImageView(img);
+        imgView.fitWidthProperty().bind(set.widthProperty());
+        imgView.fitHeightProperty().bind(set.heightProperty());
+        sp.getChildren().addAll(imgView, root);
+        set.setMinWidth(400);
+        set.setMinHeight(300);
+        set.setTitle("Settings");
+        Scene scene = new Scene(sp, 800, 600);
+        set.setScene(scene);
+        set.show();
+        /*
         System.out.println("I want to change my Settings");
         String res = Settings.display();
         playerScen = Integer.parseInt(res.split(",")[0]);
         enemyScen = Integer.parseInt(res.split(",")[1]);
         System.out.println(res);
+         */
     }
 
     public void changeScene(Stage window) throws IOException {

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="300.0" maxWidth="400.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="battleship.Settings">
+   <Label layoutX="117.0" layoutY="101.0" text="Enemy Scenario ID" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="100.0" />
+   <Label layoutX="119.0" layoutY="40.0" text="Player Scenario ID" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="40.0" />
+   <Button layoutX="133.0" layoutY="196.0" mnemonicParsing="false" onAction="#Validate" text="Validate and Continue" />
+   <TextField fx:id="p" layoutX="230.0" layoutY="36.0" prefHeight="25.0" prefWidth="38.0" />
+   <TextField fx:id="e" layoutX="230.0" layoutY="96.0" prefHeight="25.0" prefWidth="38.0" />
+</AnchorPane>
