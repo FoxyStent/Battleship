@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="300.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="battleship.Waiting">
+   <Region prefHeight="300.0" prefWidth="300.0" style="-fx-background-color: #969696;" />
+   <Region layoutX="10.0" layoutY="10.0" prefHeight="280.0" prefWidth="280.0" style="-fx-background-color: #ffffff;" />
+   <Arc fx:id="arc" layoutX="150.0" layoutY="150.0" length="360.0" radiusX="50.0" radiusY="50.0" startAngle="90.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" type="ROUND">
+      <fill>
+         <LinearGradient startY="1.0">
+            <stops>
+               <Stop>
+                  <color>
+                     <Color red="1.0" green="1.0" blue="1.0" />
+                  </color>
+               </Stop>
+               <Stop offset="0.64367816091954">
+                  <color>
+                     <Color red="1.0" green="1.0" blue="1.0" />
+                  </color>
+               </Stop>
+               <Stop offset="0.9097444404945286">
+                  <color>
+                     <Color red="0.3199999928474426" green="0.3199999928474426" blue="1.0" />
+                  </color>
+               </Stop>
+               <Stop offset="1.0">
+                  <color>
+                     <Color blue="1.0" />
+                  </color>
+               </Stop>
+            </stops>
+         </LinearGradient>
+      </fill>
+   </Arc>
+   <Circle fill="WHITE" layoutX="150.0" layoutY="150.0" radius="40.0" stroke="WHITE" strokeLineCap="ROUND" strokeType="INSIDE" />
+   <Label layoutX="51.0" layoutY="41.0" text="Waiting for Opponent to play...">
+      <font>
+         <Font name="Elephant" size="13.0" />
+      </font>
+   </Label>
+</AnchorPane>
