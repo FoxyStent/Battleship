@@ -31,8 +31,6 @@ public class GameGridController implements Initializable {
     @FXML
     public GridPane rightMenu;
     @FXML
-    private Button bombBut;
-    @FXML
     private TextField X_coord;
     @FXML
     private TextField Y_coord;
@@ -44,12 +42,21 @@ public class GameGridController implements Initializable {
     private Label yourScore;
     @FXML
     private Label enemyScore;
+    @FXML
+    private Label yourTurnsLabel;
+    @FXML
+    private Label enemyTurnsLabel;
+    @FXML
+    private Label yourPercLabel;
+    @FXML
+    private Label enemyPercLabel;
 
     private Player player;
     private NPC enemy;
-    private Move npcPrevMove = new Move(-1,-1);
-    public int playerTurns = 0;
-    public int enemyTurns = 0;
+    private int playerTurns = 0;
+    private int enemyTurns = 0;
+    private int yourHits = 0;
+    private int enemyHits = 0;
 
     //TODO When an enemy hits a ship he has to search at the nearby cells. As of now, enemy searchs nearby cells only for a round. Have to Search until the ship is destroyed.
     //TODO When player plays find a cool "Wait for opponent to play" animation or else the NPC move is instantaneous and player doesnt know.
@@ -102,10 +109,17 @@ public class GameGridController implements Initializable {
             droppedThere.showAndWait();
             return;
         }
+
+        if (move.hit){
+            yourHits++;
+            System.out.println((double) yourHits/playerTurns);
+        }
         int currPoints = Integer.parseInt(yourScore.getText());
+        playerTurns++;
+        yourTurnsLabel.setText(Integer.toString(playerTurns));
         yourScore.setText(Integer.toString(currPoints+awardedPoints));
+        yourPercLabel.setText((100 * yourHits) / playerTurns +"%");
         cell.placeBomb();
-        pause(50);
 
         //Creating new scene and stage for the wait animation
         Parent waitParent = FXMLLoader.load(getClass().getResource("Waiting.fxml"));
@@ -127,12 +141,8 @@ public class GameGridController implements Initializable {
         waitStage.setOnHiding(e->{
             veil.setDisable(true);
             veil.setOpacity(0);
-            Platform.runLater(() -> {
-                pause(500);
-                enemyMove();
-                checkEndgame();
-            });
-
+            enemyMove();
+            checkEndgame();
         });
 
 
@@ -142,17 +152,34 @@ public class GameGridController implements Initializable {
 
     public void enemyMove(){
         Move enemyMove;
+        enemyTurns++;
         int awardedPoints, currPoints;
         GridTile cell;
         do{
-            enemyMove = enemy.makeNpcMove(npcPrevMove);
+            enemyMove = enemy.makeNpcMove();
         }while(alreadyDroppedBomb(enemyMove, false));
         awardedPoints = this.player.incomingBomb(enemyMove);
-        npcPrevMove = enemyMove;
+        if (enemyMove.hit){
+            enemy.wasHit(enemyMove);
+            System.out.println("Hit Ship");
+            enemyHits++;
+        }
+        if (enemyMove.sunkShip){
+            enemy.sunkShip();
+        }
         cell = (GridTile) leftGrid.getChildren().get(20 + (enemyMove.getX() -1)*10 + (enemyMove.getY()-1));
         currPoints = Integer.parseInt(enemyScore.getText());
         enemyScore.setText(Integer.toString(currPoints+awardedPoints));
-        cell.placeBomb();
+
+        enemyTurns++;
+        enemyTurnsLabel.setText(Integer.toString(playerTurns));
+        enemyPercLabel.setText((100 * enemyHits) / enemyTurns +"%");
+
+        Platform.runLater(() -> {
+            cell.placeBomb();
+            pause(300);
+        });
+
         checkEndgame();
     }
 

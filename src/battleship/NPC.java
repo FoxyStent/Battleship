@@ -3,38 +3,34 @@ package battleship;
 import battleship.exce.OversizeException;
 
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.Random;
 
 public class NPC extends Player{
+
+    Move prevMove = new Move(-1, -1);
+    LinkedList<Move> hits = new LinkedList<>();
+    LinkedList<Move> tryNext = new LinkedList<>();
 
     public NPC(boolean en, int scenario_id) throws IOException, OversizeException {
         super(en, scenario_id);
     }
 
-    public Move makeNpcMove(Move prevMove){
+    public Move makeNpcMove(){
         Move newMove;
-        if (prevMove.hit){
-            newMove = closeHit(prevMove);
+        System.out.println(tryNext.isEmpty());
+        if (!tryNext.isEmpty()){
+            newMove = closeHit();
         }
         else
             newMove = randomMove();
 
+        prevMove = newMove;
         return  newMove;
     }
 
-    public Move closeHit(Move prevMove){
-        Random rand = new Random();
-        int nextX = rand.nextInt(2) - 1;
-        int nextY = rand.nextInt(2) - 1;
-        while (nextX == 0 && nextY == 0){
-            nextX = rand.nextInt(2) - 1;
-            nextY = rand.nextInt(2) - 1;
-        }
-        int prevX = prevMove.getX();
-        int prevY = prevMove.getY();
-        int X = prevX + nextX;
-        int Y = prevY + nextY;
-        return new Move(X, Y);
+    public Move closeHit(){
+        return tryNext.pop();
     }
 
     public Move randomMove(){
@@ -42,5 +38,18 @@ public class NPC extends Player{
         int X = rand.nextInt(9) + 1;
         int Y = rand.nextInt(9) + 1;
         return new Move(X,Y);
+    }
+
+    public void wasHit(Move mv){
+        tryNext.add(0,new Move(mv.getX(), mv.getY()+1));
+        System.out.println("added" + mv.getX() +  mv.getY()+1);
+        tryNext.add(0,new Move(mv.getX()+1, mv.getY()));
+        tryNext.add(0,new Move(mv.getX(), mv.getY()-1));
+        tryNext.add(0,new Move(mv.getX()-1, mv.getY()));
+    }
+
+    public void sunkShip(){
+        tryNext.clear();
+        System.out.println("Cleared Hits");
     }
 }

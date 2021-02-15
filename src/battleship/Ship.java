@@ -68,6 +68,7 @@ public class  Ship{
                     if(!Hits[X-StartingX]) {
                         Hits[X - StartingX] = true;
                         this.State = "hit";
+                        move.setHit();
                         if (this.gotSunk()) {
                             ret = this.SinkPoints;
                             move.setSunkShip(true);

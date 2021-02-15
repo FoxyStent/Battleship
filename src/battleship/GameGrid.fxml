@@ -31,8 +31,8 @@
                   <RowConstraints minHeight="1.0" prefHeight="1.0" vgrow="SOMETIMES" />
               </rowConstraints>
               <Label text="Your Score" GridPane.rowIndex="1" />
-              <Label text="0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-              <Label text="0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+              <Label fx:id="yourPercLabel" text="0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+              <Label fx:id="yourTurnsLabel" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
               <Label fx:id="yourScore" text="0" GridPane.rowIndex="2" />
               <Label text="Your Turns" GridPane.columnIndex="1" GridPane.rowIndex="1" />
               <Label text="Your Shot/Hit Percentage" GridPane.columnIndex="2" GridPane.rowIndex="1" />
@@ -53,8 +53,8 @@
                   <RowConstraints minHeight="1.0" prefHeight="1.0" vgrow="SOMETIMES" />
               </rowConstraints>
               <Label text="Enemy Score" GridPane.rowIndex="1" />
-              <Label text="0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-              <Label text="0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+              <Label fx:id="enemyPercLabel" text="0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+              <Label fx:id="enemyTurnsLabel" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
               <Label fx:id="enemyScore" text="0" GridPane.rowIndex="2" />
               <Label text="Enemy Turns" GridPane.columnIndex="1" GridPane.rowIndex="1" />
               <Label text="Enemy Shot/Hit Percentage" GridPane.columnIndex="2" GridPane.rowIndex="1" />
@@ -142,7 +142,7 @@
                   <HBox.margin>
                       <Insets />
                   </HBox.margin>
-                  <Button fx:id="bombBut" mnemonicParsing="false" onAction="#dropTheBomb" text="Drop Bomb">
+                  <Button mnemonicParsing="false" onAction="#dropTheBomb" text="Drop Bomb">
                       <VBox.margin>
                           <Insets top="22.0" />
                       </VBox.margin>
