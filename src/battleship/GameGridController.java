@@ -1,7 +1,9 @@
 package battleship;
 
+import battleship.*;
 import battleship.exce.OverlapTilesException;
 import battleship.exce.OversizeException;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,8 +18,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import javax.management.Notification;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 
@@ -102,7 +106,6 @@ public class GameGridController implements Initializable {
         yourScore.setText(Integer.toString(currPoints+awardedPoints));
         cell.placeBomb();
         pause(50);
-        pause(950);
 
         //Creating new scene and stage for the wait animation
         Parent waitParent = FXMLLoader.load(getClass().getResource("Waiting.fxml"));
@@ -124,9 +127,12 @@ public class GameGridController implements Initializable {
         waitStage.setOnHiding(e->{
             veil.setDisable(true);
             veil.setOpacity(0);
-            pause(1000);
-            enemyMove();
-            checkEndgame();
+            Platform.runLater(() -> {
+                pause(500);
+                enemyMove();
+                checkEndgame();
+            });
+
         });
 
 
@@ -208,7 +214,7 @@ public class GameGridController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Now Running Initializing");
         //Adding Labels
-        for (int i=1; i<11; i++) {
+        for (int i = 1; i < 11; i++) {
             leftGrid.add(new Label(Integer.toString(i)), i, 0);
             leftGrid.add(new Label(Integer.toString(i)), 0, i);
             rightGrid.add(new Label(Integer.toString(i)), i, 0);
@@ -216,7 +222,7 @@ public class GameGridController implements Initializable {
 
         }
         //Adding Grid Tiles
-        for (int i=1; i<11; i++) {
+        for (int i = 1; i < 11; i++) {
             for (int j = 1; j < 11; j++) {
                 GridTile friendlyTile = new GridTile(i, j, false);
                 GridTile enemyTile = new GridTile(i, j, false);
@@ -242,5 +248,19 @@ public class GameGridController implements Initializable {
         } catch (OverlapTilesException e) {
             e.printStackTrace();
         }
+
+        Platform.runLater(() -> {
+            //do something cool maybe.
+            double rand = Math.random();
+            if (rand > 0.5){
+                Alert enemy = new Alert(Alert.AlertType.INFORMATION, "Enemy Plays");
+                enemy.showAndWait();
+                enemyMove();
+            }
+            else{
+                Alert enemy = new Alert(Alert.AlertType.INFORMATION, "You are playing");
+                enemy.showAndWait();
+            }
+        });
     }
 }
