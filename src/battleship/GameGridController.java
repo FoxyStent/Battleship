@@ -8,10 +8,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
@@ -19,8 +22,12 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import javax.management.Notification;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.net.http.WebSocket;
+import java.util.Optional;
 import java.util.Random;
 import java.util.ResourceBundle;
 
@@ -50,30 +57,90 @@ public class GameGridController implements Initializable {
     private Label yourPercLabel;
     @FXML
     private Label enemyPercLabel;
+    @FXML
+    private GridPane mainGrid;
+
+    private Stage stg;
 
     private Player player;
     private NPC enemy;
-    private int playerTurns = 0;
-    private int enemyTurns = 0;
+    private int playerTurns = 1;
+    private int enemyTurns = 1;
     private int yourHits = 0;
     private int enemyHits = 0;
 
     //TODO When an enemy hits a ship he has to search at the nearby cells. As of now, enemy searchs nearby cells only for a round. Have to Search until the ship is destroyed.
     //TODO When player plays find a cool "Wait for opponent to play" animation or else the NPC move is instantaneous and player doesnt know.
     
-    public void checkEndgame(){
+    public boolean checkEndgame() throws IOException {
         boolean ships = (player.getShipsLeft() == 0) || (enemy.getShipsLeft() == 0);
         boolean turns = (playerTurns == 39) || (enemyTurns == 39);
-        if (ships && turns){
+        if (ships || turns){
             disableGrid();
             showGameOver();
+            return true;
         }
+        return false;
     }
 
-    private void showGameOver() {
+    private void showGameOver() throws IOException {
+        ButtonType mainMenuBut = new ButtonType("Back to Main Menu");
+        ButtonType playAgainBut = new ButtonType("Play Again!");
+        ButtonType showStatsBut = new ButtonType("Show Stats");
+        Alert gameover = new Alert(Alert.AlertType.INFORMATION, "Game Over!. GG", mainMenuBut, playAgainBut, showStatsBut);
+        Optional<ButtonType> res = gameover.showAndWait();
+        ButtonType resChoice = res.orElse(null);
+        if (resChoice == mainMenuBut){
+            mainMenu();
+        }
+        else if (resChoice == playAgainBut){
+            playAgain();
+        }
+        else{
+            showStats();
+        }
+
+    }
+
+    private void mainMenu() throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("BootMenu.fxml"));
+        StackPane sp = new StackPane();
+        Image img = new Image(new FileInputStream("src/battleship/assets/978648.jpg"));
+        ImageView imgView= new ImageView(img);
+        imgView.fitWidthProperty().bind(stg.widthProperty());
+        imgView.fitHeightProperty().bind(stg.heightProperty());
+        sp.getChildren().addAll(imgView, root);
+        Scene scene = new Scene(sp, 800, 600);
+        stg.setScene(scene);
+    }
+
+    private void playAgain() throws IOException {
+        StackPane sp = new StackPane();
+        GridPane game = FXMLLoader.load(getClass().getResource("GameGrid.fxml"));
+
+        Image img = new Image(new FileInputStream("src/battleship/assets/978648.jpg"));
+        ImageView imgView= new ImageView(img);
+        imgView.fitWidthProperty().bind(stg.widthProperty());
+        imgView.fitHeightProperty().bind(stg.heightProperty());
+        imgView.setOpacity(0.5);
+
+        Region reg = new Region();
+        reg.setPrefHeight(600);
+        reg.setPrefWidth(800);
+        reg.setDisable(true);
+        reg.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+        reg.setOpacity(0.0);
+
+        sp.getChildren().addAll(imgView, game, reg);
+        stg.setScene(new Scene(sp, 800, 600));
+    }
+
+    private void showStats(){
+
     }
 
     private void disableGrid() {
+        mainGrid.setDisable(true);
     }
 
     public static void pause(int ms) {
@@ -115,39 +182,41 @@ public class GameGridController implements Initializable {
             System.out.println((double) yourHits/playerTurns);
         }
         int currPoints = Integer.parseInt(yourScore.getText());
-        playerTurns++;
-        yourTurnsLabel.setText(Integer.toString(playerTurns));
         yourScore.setText(Integer.toString(currPoints+awardedPoints));
         yourPercLabel.setText((100 * yourHits) / playerTurns +"%");
+        playerTurns++;
+        yourTurnsLabel.setText(Integer.toString(playerTurns));
         cell.placeBomb();
+        if(!checkEndgame()) {
 
-        //Creating new scene and stage for the wait animation
-        Parent waitParent = FXMLLoader.load(getClass().getResource("Waiting.fxml"));
-        Stage waitStage = new Stage();
-        waitStage.setMinHeight(300);
-        waitStage.setMinWidth(300);
-        waitStage.initStyle(StageStyle.UNDECORATED);
-        waitStage.initModality(Modality.APPLICATION_MODAL);
-        Scene aniScene = new Scene(waitParent, 300,300);
-        waitStage.setScene(aniScene);
-        waitStage.show();
+            //Creating new scene and stage for the wait animation
+            Parent waitParent = FXMLLoader.load(getClass().getResource("Waiting.fxml"));
+            Stage waitStage = new Stage();
+            waitStage.setMinHeight(300);
+            waitStage.setMinWidth(300);
+            waitStage.initStyle(StageStyle.UNDECORATED);
+            waitStage.initModality(Modality.APPLICATION_MODAL);
+            Scene aniScene = new Scene(waitParent, 300, 300);
+            waitStage.setScene(aniScene);
+            waitStage.show();
 
-        //Changing modality on the main stage
-        Scene mainScene = ((Node)(actionEvent.getTarget())).getScene();
-        StackPane game = (StackPane) mainScene.getRoot();
-        Region veil = (Region) game.getChildren().get(2);
-        veil.setDisable(false);
-        veil.setOpacity(0.5);
-        waitStage.setOnHiding(e->{
-            veil.setDisable(true);
-            veil.setOpacity(0);
-            enemyMove();
-            checkEndgame();
-        });
-
-
-        //Enemy move
-
+            //Changing modality on the main stage
+            Scene mainScene = ((Node) (actionEvent.getTarget())).getScene();
+            StackPane game = (StackPane) mainScene.getRoot();
+            Region veil = (Region) game.getChildren().get(2);
+            veil.setDisable(false);
+            veil.setOpacity(0.5);
+            waitStage.setOnHiding(e -> {
+                veil.setDisable(true);
+                veil.setOpacity(0);
+                enemyMove();
+                try {
+                    checkEndgame();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            });
+        }
     }
 
     public void enemyMove(){
@@ -170,17 +239,14 @@ public class GameGridController implements Initializable {
         cell = (GridTile) leftGrid.getChildren().get(20 + (enemyMove.getX() -1)*10 + (enemyMove.getY()-1));
         currPoints = Integer.parseInt(enemyScore.getText());
         enemyScore.setText(Integer.toString(currPoints+awardedPoints));
-
+        enemyPercLabel.setText((100 * enemyHits) / enemyTurns +"%");
         enemyTurns++;
         enemyTurnsLabel.setText(Integer.toString(playerTurns));
-        enemyPercLabel.setText((100 * enemyHits) / enemyTurns +"%");
 
         Platform.runLater(() -> {
             cell.placeBomb();
             pause(300);
         });
-
-        checkEndgame();
     }
 
     public boolean alreadyDroppedBomb(Move mv, boolean checkEnemy){
@@ -288,6 +354,8 @@ public class GameGridController implements Initializable {
                 Alert enemy = new Alert(Alert.AlertType.INFORMATION, "You are playing");
                 enemy.showAndWait();
             }
+            stg = (Stage) mainGrid.getScene().getWindow();
         });
+
     }
 }
