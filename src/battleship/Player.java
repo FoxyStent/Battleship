@@ -108,6 +108,10 @@ public class Player {
         return shipsLeft;
     }
 
+    public Ship[] getPlayerShips(){
+        return playerShips;
+    }
+
     @Override
     public String toString() {
         return "Player{\n" +

@@ -26,7 +26,7 @@ public class Main extends Application {
         sp.getChildren().addAll(imgView, root);
         primaryStage.setMinWidth(800);
         primaryStage.setMinHeight(600);
-        primaryStage.setTitle("GEIA SOU FILEEE");
+        primaryStage.setTitle("MediaLab Battleship");
         Scene scene = new Scene(sp, 800, 600);
         primaryStage.setScene(scene);
         primaryStage.show();

@@ -9,6 +9,7 @@ public class  Ship{
     public int SinkPoints;
     public String State;
     public int size;
+    public int hpLeft;
     public int StartingX;
     public int StartingY;
     public int orientation;
@@ -22,6 +23,7 @@ public class  Ship{
         Hits = new boolean[this.size];
         this.State = "Untouched";
         this.Name = Nam;
+        this.hpLeft = s;
     }
 
     public void place(int X1, int Y1, int or) throws OversizeException {
@@ -51,7 +53,8 @@ public class  Ship{
                 if (this.StartingY <= Y && this.StartingY + this.size > Y) {
                     if (!Hits[Y - StartingY]) {
                         Hits[Y - StartingY] = true;
-                        this.State = "hit";
+                        this.hpLeft--;
+                        this.State = "Hit";
                         move.setHit();
                         if (this.gotSunk()) {
                             ret = this.SinkPoints;
@@ -67,7 +70,8 @@ public class  Ship{
                 if (this.StartingX <= X && this.StartingX + this.size > X){
                     if(!Hits[X-StartingX]) {
                         Hits[X - StartingX] = true;
-                        this.State = "hit";
+                        this.hpLeft--;
+                        this.State = "Hit";
                         move.setHit();
                         if (this.gotSunk()) {
                             ret = this.SinkPoints;
@@ -87,9 +91,21 @@ public class  Ship{
                 return false;
             }
         System.out.println(Name + " got Destroyed.");
-        this.State = "sunk";
+        this.State = "Sunk";
 
         return true;
+    }
+
+    public String getState(){
+        return State;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public int getHpLeft() {
+        return hpLeft;
     }
 
     @Override

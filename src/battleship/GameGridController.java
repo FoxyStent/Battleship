@@ -34,10 +34,6 @@ import java.util.ResourceBundle;
 
 public class GameGridController implements Initializable {
     @FXML
-    public GridPane leftMenu;
-    @FXML
-    public GridPane rightMenu;
-    @FXML
     private TextField X_coord;
     @FXML
     private TextField Y_coord;
@@ -59,7 +55,6 @@ public class GameGridController implements Initializable {
     private Label enemyPercLabel;
     @FXML
     private GridPane mainGrid;
-
     private Stage stg;
 
     private Player player;
@@ -151,74 +146,6 @@ public class GameGridController implements Initializable {
         }
     }
 
-    public void dropTheBomb(ActionEvent actionEvent) throws IOException {
-        if (X_coord.getText().equals("") || Y_coord.getText().equals("")){
-            Alert coordAlert = new Alert(Alert.AlertType.ERROR, "Please Enter Coordinates Values", ButtonType.CLOSE);
-            coordAlert.show();
-            return;
-        }
-        int x = Integer.parseInt(X_coord.getText());
-        int y = Integer.parseInt(Y_coord.getText());
-        if (x <= 0 || x>10 || y <= 0 || y > 10){
-            Alert coordAlert = new Alert(Alert.AlertType.ERROR, "Please Enter correct Coordinates Values", ButtonType.CLOSE);
-            coordAlert.show();
-            return;
-        }
-        GridTile cell = (GridTile) rightGrid.getChildren().get(20 + (x-1)*10 + (y-1));
-        Move move = new Move(x,y);
-        int awardedPoints;
-        if (!alreadyDroppedBomb(move, true)) {
-
-            awardedPoints = this.enemy.incomingBomb(move);
-        }
-        else {
-            Alert droppedThere = new Alert(Alert.AlertType.WARNING, "You have already Bombed that Cell\nPlease choose another one.");
-            droppedThere.showAndWait();
-            return;
-        }
-
-        if (move.hit){
-            yourHits++;
-            System.out.println((double) yourHits/playerTurns);
-        }
-        int currPoints = Integer.parseInt(yourScore.getText());
-        yourScore.setText(Integer.toString(currPoints+awardedPoints));
-        yourPercLabel.setText((100 * yourHits) / playerTurns +"%");
-        playerTurns++;
-        yourTurnsLabel.setText(Integer.toString(playerTurns));
-        cell.placeBomb();
-        if(!checkEndgame()) {
-
-            //Creating new scene and stage for the wait animation
-            Parent waitParent = FXMLLoader.load(getClass().getResource("Waiting.fxml"));
-            Stage waitStage = new Stage();
-            waitStage.setMinHeight(300);
-            waitStage.setMinWidth(300);
-            waitStage.initStyle(StageStyle.UNDECORATED);
-            waitStage.initModality(Modality.APPLICATION_MODAL);
-            Scene aniScene = new Scene(waitParent, 300, 300);
-            waitStage.setScene(aniScene);
-            waitStage.show();
-
-            //Changing modality on the main stage
-            Scene mainScene = ((Node) (actionEvent.getTarget())).getScene();
-            StackPane game = (StackPane) mainScene.getRoot();
-            Region veil = (Region) game.getChildren().get(2);
-            veil.setDisable(false);
-            veil.setOpacity(0.5);
-            waitStage.setOnHiding(e -> {
-                veil.setDisable(true);
-                veil.setOpacity(0);
-                enemyMove();
-                try {
-                    checkEndgame();
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }
-            });
-        }
-    }
-
     public void enemyMove(){
         Move enemyMove;
         enemyTurns++;
@@ -301,6 +228,124 @@ public class GameGridController implements Initializable {
                 cell.setStyle("-fx-background-color: #"+ col + " ; -fx-border-color: black");
             }
         }
+    }
+
+    public void dropTheBomb(ActionEvent actionEvent) throws IOException {
+        if (X_coord.getText().equals("") || Y_coord.getText().equals("")){
+            Alert coordAlert = new Alert(Alert.AlertType.ERROR, "Please Enter Coordinates Values", ButtonType.CLOSE);
+            coordAlert.show();
+            return;
+        }
+        int x = Integer.parseInt(X_coord.getText());
+        int y = Integer.parseInt(Y_coord.getText());
+        if (x <= 0 || x>10 || y <= 0 || y > 10){
+            Alert coordAlert = new Alert(Alert.AlertType.ERROR, "Please Enter correct Coordinates Values", ButtonType.CLOSE);
+            coordAlert.show();
+            return;
+        }
+        GridTile cell = (GridTile) rightGrid.getChildren().get(20 + (x-1)*10 + (y-1));
+        Move move = new Move(x,y);
+        int awardedPoints;
+        if (!alreadyDroppedBomb(move, true)) {
+
+            awardedPoints = this.enemy.incomingBomb(move);
+        }
+        else {
+            Alert droppedThere = new Alert(Alert.AlertType.WARNING, "You have already Bombed that Cell\nPlease choose another one.");
+            droppedThere.showAndWait();
+            return;
+        }
+
+        if (move.hit){
+            yourHits++;
+            System.out.println((double) yourHits/playerTurns);
+        }
+        int currPoints = Integer.parseInt(yourScore.getText());
+        yourScore.setText(Integer.toString(currPoints+awardedPoints));
+        yourPercLabel.setText((100 * yourHits) / playerTurns +"%");
+        playerTurns++;
+        yourTurnsLabel.setText(Integer.toString(playerTurns));
+        cell.placeBomb();
+        if(!checkEndgame()) {
+
+            //Creating new scene and stage for the wait animation
+            Parent waitParent = FXMLLoader.load(getClass().getResource("Waiting.fxml"));
+            Stage waitStage = new Stage();
+            waitStage.setMinHeight(300);
+            waitStage.setMinWidth(300);
+            waitStage.initStyle(StageStyle.UNDECORATED);
+            waitStage.initModality(Modality.APPLICATION_MODAL);
+            Scene aniScene = new Scene(waitParent, 300, 300);
+            waitStage.setScene(aniScene);
+            waitStage.show();
+
+            //Changing modality on the main stage
+            Scene mainScene = ((Node) (actionEvent.getTarget())).getScene();
+            StackPane game = (StackPane) mainScene.getRoot();
+            Region veil = (Region) game.getChildren().get(2);
+            veil.setDisable(false);
+            veil.setOpacity(0.5);
+            waitStage.setOnHiding(e -> {
+                veil.setDisable(true);
+                veil.setOpacity(0);
+                enemyMove();
+                try {
+                    checkEndgame();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            });
+        }
+    }
+
+    public void startBut(ActionEvent actionEvent) throws IOException {
+        playAgain();
+    }
+
+    public void loadBut(ActionEvent actionEvent) throws IOException {
+        Stage set = new Stage();
+
+        set.initModality(Modality.APPLICATION_MODAL);
+        set.setTitle("Settings");
+        set.setMinWidth(400);
+        set.setMinHeight(300);
+
+        StackPane sp = new StackPane();
+        Parent root = FXMLLoader.load(getClass().getResource("Settings.fxml"));
+        Image img = new Image(new FileInputStream("src/battleship/assets/978648.jpg"));
+        ImageView imgView= new ImageView(img);
+        imgView.fitWidthProperty().bind(set.widthProperty());
+        imgView.fitHeightProperty().bind(set.heightProperty());
+        sp.getChildren().addAll(imgView, root);
+        set.setMinWidth(400);
+        set.setMinHeight(300);
+        set.setTitle("Settings");
+        Scene scene = new Scene(sp, 800, 600);
+        set.setScene(scene);
+        set.show();
+    }
+
+    public void exitBut(ActionEvent actionEvent) {
+        Platform.exit();
+    }
+
+    public void enemyShipsBut(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("EnemyShips.fxml"));
+        GridPane root = loader.load();
+        Scene scene = new Scene(root, 400, 300);
+        Stage popup = new Stage();
+        popup.setMaxHeight(400.0);
+        popup.setMaxWidth(300.0);
+        popup.setScene(scene);
+        EnemyShips controller = loader.getController();
+        controller.setEnemy(enemy);
+        popup.showAndWait();
+    }
+
+    public void playerShotsBut(ActionEvent actionEvent) {
+    }
+
+    public void enemyShotsBut(ActionEvent actionEvent) {
     }
 
     @Override
