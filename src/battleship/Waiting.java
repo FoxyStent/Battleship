@@ -3,9 +3,9 @@ package battleship;
 import javafx.animation.RotateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.shape.Arc;
 import javafx.scene.transform.Rotate;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.net.URL;
@@ -18,10 +18,16 @@ public class Waiting implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
-        RotateTransition rotateTransition = new RotateTransition(Duration.seconds(2), arc);
+        double wait = Math.random();
+        RotateTransition rotateTransition = new RotateTransition(Duration.seconds(wait*2+0.1), arc);
         rotateTransition.setAxis(Rotate.Z_AXIS);
-        rotateTransition.setByAngle(720.0);
-        rotateTransition.setOnFinished(actionEvent -> arc.getScene().getWindow().hide());
+        rotateTransition.setByAngle(360*wait+20);
+        rotateTransition.setOnFinished(actionEvent -> {
+            Stage stage = (Stage) arc.getScene().getWindow();
+            stage.hide();
+            stage.close();
+
+        });
         rotateTransition.play();
     }
 

@@ -21,14 +21,11 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import javax.management.Notification;
+
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.net.http.WebSocket;
 import java.util.Optional;
-import java.util.Random;
 import java.util.ResourceBundle;
 
 
@@ -69,7 +66,7 @@ public class GameGridController implements Initializable {
     
     public boolean checkEndgame() throws IOException {
         boolean ships = (player.getShipsLeft() == 0) || (enemy.getShipsLeft() == 0);
-        boolean turns = (playerTurns == 39) || (enemyTurns == 39);
+        boolean turns = (playerTurns == 39) || (enemyTurns == 3);
         if (ships || turns){
             disableGrid();
             showGameOver();
@@ -136,6 +133,9 @@ public class GameGridController implements Initializable {
 
     private void disableGrid() {
         mainGrid.setDisable(true);
+        StackPane sp = (StackPane)mainGrid.getParent();
+        Region reg = (Region) sp.getChildren().get(2);
+        reg.setOpacity(0.7);
     }
 
     public static void pause(int ms) {
@@ -167,7 +167,6 @@ public class GameGridController implements Initializable {
         currPoints = Integer.parseInt(enemyScore.getText());
         enemyScore.setText(Integer.toString(currPoints+awardedPoints));
         enemyPercLabel.setText((100 * enemyHits) / enemyTurns +"%");
-        enemyTurns++;
         enemyTurnsLabel.setText(Integer.toString(playerTurns));
 
         Platform.runLater(() -> {
@@ -231,6 +230,7 @@ public class GameGridController implements Initializable {
     }
 
     public void dropTheBomb(ActionEvent actionEvent) throws IOException {
+        System.out.println(playerTurns + " " + enemyTurns);
         if (X_coord.getText().equals("") || Y_coord.getText().equals("")){
             Alert coordAlert = new Alert(Alert.AlertType.ERROR, "Please Enter Coordinates Values", ButtonType.CLOSE);
             coordAlert.show();
@@ -280,12 +280,14 @@ public class GameGridController implements Initializable {
             waitStage.show();
 
             //Changing modality on the main stage
+            System.out.println("After showAndWait");
             Scene mainScene = ((Node) (actionEvent.getTarget())).getScene();
             StackPane game = (StackPane) mainScene.getRoot();
             Region veil = (Region) game.getChildren().get(2);
             veil.setDisable(false);
             veil.setOpacity(0.5);
-            waitStage.setOnHiding(e -> {
+            waitStage.setOnHidden(e -> Platform.runLater(() -> {
+                System.out.println("After setOnHidden");
                 veil.setDisable(true);
                 veil.setOpacity(0);
                 enemyMove();
@@ -294,7 +296,7 @@ public class GameGridController implements Initializable {
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
-            });
+            }));
         }
     }
 

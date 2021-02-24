@@ -28,6 +28,7 @@ public class Main extends Application {
         primaryStage.setMinHeight(600);
         primaryStage.setTitle("MediaLab Battleship");
         Scene scene = new Scene(sp, 800, 600);
+        primaryStage.sizeToScene();
         primaryStage.setScene(scene);
         primaryStage.show();
         System.out.println("This is a String");

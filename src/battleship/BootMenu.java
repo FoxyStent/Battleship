@@ -174,7 +174,9 @@ public class BootMenu{
 
         sp.getChildren().addAll(imgView, game, reg);
         window.setScene(new Scene(sp, 800, 600));
-
+        window.sizeToScene();
+        window.setMinWidth(800);
+        window.setMinHeight(600);
 
     }
 }
