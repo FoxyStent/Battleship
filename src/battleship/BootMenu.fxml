@@ -1,20 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox id="root" fx:id="root" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
-      prefWidth="800.0" stylesheets="@../stylesheet.css" xmlns="http://javafx.com/javafx/11.0.2"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="battleship.BootMenu">
-   <Label id="battleship" style="-fx-font-size: 40px; -fx-effect: dropshadow(gaussian, black, 5, 20, -2, 2);"
-          text="Battleship" textFill="WHITE"/>
-   <HBox alignment="CENTER">
+<VBox id="root" fx:id="root" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../stylesheet.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="battleship.BootMenu">
+   <Label id="battleship" style="-fx-font-size: 40px; -fx-effect: dropshadow(gaussian, black, 5, 20, -2, 2);" text="Battleship" textFill="WHITE">
+      <VBox.margin>
+         <Insets bottom="10.0" />
+      </VBox.margin>
+      <padding>
+         <Insets bottom="20.0" />
+      </padding></Label>
+   <HBox alignment="CENTER" prefHeight="146.0" prefWidth="800.0">
+      <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+      <Button id="playButton" fx:id="playButton" alignment="CENTER" mnemonicParsing="false" onAction="#playGame" prefHeight="60.0" prefWidth="125.0" text="Play" />
+      <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+      <Button id="settingsButton" mnemonicParsing="false" onAction="#settingsEdit" prefHeight="60.0" prefWidth="125.0" text="Settings" />
+      <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+         <HBox.margin>
+            <Insets />
+         </HBox.margin></Region>
+   </HBox>
+   <HBox alignment="CENTER" prefHeight="72.0" prefWidth="800.0">
       <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS"/>
-      <Button id="playButton" fx:id="playButton" alignment="CENTER" mnemonicParsing="false" onAction="#playGame"
-              prefHeight="60.0" prefWidth="125.0" text="Play"/>
-      <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS"/>
-      <Button id="settingsButton" mnemonicParsing="false" onAction="#settingsEdit" prefHeight="60.0"
-              prefWidth="125.0" text="Settings"/>
+      <Button mnemonicParsing="false" onAction="#quit" prefHeight="60.0" prefWidth="125.0" text="Quit"/>
       <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS"/>
    </HBox>
 </VBox>

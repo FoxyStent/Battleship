@@ -1,6 +1,7 @@
 package battleship;
 
 import battleship.exce.OversizeException;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -143,16 +144,10 @@ public class BootMenu{
         set.setMinWidth(400);
         set.setMinHeight(300);
         set.setTitle("Settings");
-        Scene scene = new Scene(sp, 800, 600);
+        Scene scene = new Scene(sp, 600, 300);
         set.setScene(scene);
         set.show();
-        /*
-        System.out.println("I want to change my Settings");
-        String res = Settings.display();
-        playerScen = Integer.parseInt(res.split(",")[0]);
-        enemyScen = Integer.parseInt(res.split(",")[1]);
-        System.out.println(res);
-         */
+
     }
 
     public void changeScene(Stage window) throws IOException {
@@ -178,5 +173,9 @@ public class BootMenu{
         window.setMinWidth(800);
         window.setMinHeight(600);
 
+    }
+
+    public void quit(ActionEvent actionEvent) {
+        Platform.exit();
     }
 }

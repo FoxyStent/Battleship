@@ -154,6 +154,7 @@
             <MenuItem mnemonicParsing="false" onAction="#startBut" text="Start" />
             <MenuItem mnemonicParsing="false" onAction="#loadBut" text="Load" />
             <MenuItem mnemonicParsing="false" onAction="#exitBut" text="Exit" />
+         <MenuItem mnemonicParsing="false" onAction="#mainMenuBut" text="Main Menu" />
         </Menu>
         <Menu mnemonicParsing="false" text="Details">
             <MenuItem mnemonicParsing="false" onAction="#enemyShipsBut" text="Enemy Ships" />
