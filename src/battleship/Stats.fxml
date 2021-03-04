@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane fx:id="grid" prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="battleship.Stats">
+    <columnConstraints>
+        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    </rowConstraints>
+    <HBox alignment="CENTER" style="-fx-background-color: rgb(66,101,214); -fx-border-width: 0 1 0 0; -fx-border-color: black;" GridPane.columnIndex="0" GridPane.rowIndex="0">
+        <Label alignment="CENTER" layoutX="58.0" layoutY="7.0" text="Coordinates">
+            <font>
+                <Font name="Gill Sans Ultra Bold" size="18.0" />
+            </font>
+        </Label>
+    </HBox>
+    <HBox alignment="CENTER" style="-fx-background-color: rgb(66,101,214); -fx-border-width: 0 0 0 1; -fx-border-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="0">
+        <Label layoutX="76.0" layoutY="7.0" text="Outcome">
+            <font>
+                <Font name="Gill Sans Ultra Bold" size="18.0" />
+            </font>
+        </Label>
+    </HBox>
+    <HBox alignment="CENTER" style="-fx-background-color: rgb(66,101,214); -fx-border-width: 0 1 0 0; -fx-border-color: black;" GridPane.columnIndex="0" GridPane.rowIndex="2">
+        <Label fx:id="move1" alignment="CENTER" layoutX="93.0" layoutY="10.0" text="Carrier">
+            <font>
+                <Font name="Gill Sans Ultra Bold" size="14.0" />
+            </font>
+        </Label>
+    </HBox>
+    <HBox fx:id="out1" alignment="CENTER" style="-fx-border-width: 0 0 0 1; -fx-border-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="2">
+        <Label alignment="CENTER" layoutY="10.0" text="Untouched" textFill="WHITE">
+            <font>
+                <Font name="Gill Sans Ultra Bold" size="14.0" />
+            </font>
+        </Label>
+    </HBox>
+    <HBox alignment="CENTER" style="-fx-background-color: rgb(200,200,200);-fx-border-width: 0 1 0 0; -fx-border-color: black;" GridPane.columnIndex="0" GridPane.rowIndex="3">
+        <Label fx:id="move2" alignment="CENTER" layoutX="80.0" layoutY="10.0" text="Battleship">
+            <font>
+                <Font name="Gill Sans Ultra Bold" size="14.0" />
+            </font>
+        </Label>
+    </HBox>
+    <HBox fx:id="out2" alignment="CENTER" style="-fx-border-width: 0 0 0 1; -fx-border-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="3">
+        <Label alignment="CENTER" layoutX="44.0" layoutY="10.0" text="State" textFill="WHITE">
+            <font>
+                <Font name="Gill Sans Ultra Bold" size="14.0" />
+            </font>
+        </Label>
+    </HBox>
+    <HBox alignment="CENTER" style="-fx-background-color: rgb(66,101,214);-fx-border-width: 0 1 0 0; -fx-border-color: black;" GridPane.columnIndex="0" GridPane.rowIndex="4">
+        <Label fx:id="move3" alignment="CENTER" layoutX="92.0" layoutY="9.0" text="Cruiser">
+            <font>
+                <Font name="Gill Sans Ultra Bold" size="14.0" />
+            </font>
+        </Label>
+    </HBox>
+    <HBox fx:id="out3" alignment="CENTER" style="-fx-border-width: 0 0 0 1; -fx-border-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="4">
+        <Label alignment="CENTER" layoutX="44.0" layoutY="9.0" text="State" textFill="WHITE">
+            <font>
+                <Font name="Gill Sans Ultra Bold" size="14.0" />
+            </font>
+        </Label>
+    </HBox>
+    <HBox alignment="CENTER" style="-fx-background-color: rgb(200,200,200);-fx-border-width: 0 1 0 0; -fx-border-color: black;" GridPane.columnIndex="0" GridPane.rowIndex="5">
+        <Label fx:id="move4" alignment="CENTER" layoutX="77.0" layoutY="9.0" text="Submarine">
+            <font>
+                <Font name="Gill Sans Ultra Bold" size="14.0" />
+            </font>
+        </Label>
+    </HBox>
+    <HBox fx:id="out4" alignment="CENTER" style="-fx-border-width: 0 0 0 1; -fx-border-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="5">
+        <Label alignment="CENTER" layoutX="44.0" layoutY="9.0" text="State" textFill="WHITE">
+            <font>
+                <Font name="Gill Sans Ultra Bold" size="14.0" />
+            </font>
+        </Label>
+    </HBox>
+    <HBox alignment="CENTER" style="-fx-background-color: rgb(66,101,214);-fx-border-width: 0 1 0 0; -fx-border-color: black;" GridPane.columnIndex="0" GridPane.rowIndex="6">
+        <Label fx:id="move5" alignment="CENTER" layoutX="81.0" layoutY="14.0" text="Destroyer">
+            <font>
+                <Font name="Gill Sans Ultra Bold" size="14.0" />
+            </font>
+        </Label>
+    </HBox>
+    <HBox fx:id="out5" alignment="CENTER" style="-fx-border-width: 0 0 0 1; -fx-border-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="6">
+        <Label alignment="CENTER" layoutX="44.0" layoutY="9.0" text="State" textFill="WHITE">
+            <font>
+                <Font name="Gill Sans Ultra Bold" size="14.0" />
+            </font>
+        </Label>
+    </HBox>
+    <HBox prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: rgb(200,200,200);" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+    <HBox prefHeight="300.0" prefWidth="300.0" style="-fx-background-color: rgb(200,200,200); -fx-border-width: 0 1 0 0; -fx-border-color: black;" GridPane.rowIndex="1" />
+    <HBox prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: rgb(200,200,200); -fx-border-width: 0 0 0 1; -fx-border-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+    <HBox alignment="CENTER" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: rgb(200,200,200);" GridPane.columnSpan="2147483647" GridPane.rowIndex="7">
+        <Button alignment="CENTER" layoutX="107.0" layoutY="6.0" mnemonicParsing="false" onAction="#closeWin" text="Close" />
+    </HBox>
+
+</GridPane>

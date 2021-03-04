@@ -5,6 +5,7 @@ import battleship.exce.OversizeException;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class Player {
@@ -12,7 +13,8 @@ public class Player {
     public int shipsLeft;
     private final int scenarioID;
     private final boolean isEnemy;
-    public Ship[] playerShips;
+    private Ship[] playerShips;
+    private LinkedList<Move> lastFive;
 
     public Player(boolean en, int scenario_id) throws IOException, OversizeException {
         this.scenarioID = scenario_id;
@@ -20,6 +22,7 @@ public class Player {
         this.shipsLeft = 5;
         this.score = 0;
         this.playerShips = new Ship[5];
+        this.lastFive = new LinkedList<>();
         getAndPlaceShips();
     }
 
@@ -86,10 +89,6 @@ public class Player {
         return this.score;
     }
 
-    //public Ship getPlayerShips(Type type) {
-        //return playerShips[type.ordinal()];
-    //}
-
     public Move dropABomb(int X, int Y){
         return new Move(X,Y);
     }
@@ -102,6 +101,16 @@ public class Player {
         if (move.isSunkShip())
             shipsLeft--;
         return hit;
+    }
+
+    public LinkedList<Move> getLastFive() {
+        return lastFive;
+    }
+
+    public void addMove(Move mv){
+        lastFive.add(0, mv);
+        if (lastFive.size() > 5)
+            lastFive.remove(5);
     }
 
     public int getShipsLeft() {

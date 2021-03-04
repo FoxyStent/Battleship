@@ -11,22 +11,26 @@ public class NPC extends Player{
     Move prevMove = new Move(-1, -1);
     LinkedList<Move> hits = new LinkedList<>();
     LinkedList<Move> tryNext = new LinkedList<>();
+    private MovePredictor predictor;
 
     public NPC(boolean en, int scenario_id) throws IOException, OversizeException {
         super(en, scenario_id);
+        predictor = new MovePredictor();
     }
 
     public Move makeNpcMove(){
-        Move newMove;
-        System.out.println(tryNext.isEmpty());
-        if (!tryNext.isEmpty()){
-            newMove = closeHit();
-        }
-        else
-            newMove = randomMove();
+        Move predicted = predictor.predict();
+        prevMove = predicted;
+        addMove(predicted);
+        return  predicted;
+    }
 
-        prevMove = newMove;
-        return  newMove;
+    public void moveResult(Move mv){
+        predictor.processLastMove(mv);
+    }
+
+    public void informPredictorInvalid(){
+        predictor.invalidMove();
     }
 
     public Move closeHit(){
@@ -37,7 +41,9 @@ public class NPC extends Player{
         Random rand = new Random();
         int X = rand.nextInt(9) + 1;
         int Y = rand.nextInt(9) + 1;
-        return new Move(X,Y);
+        Move mv = new Move(X,Y);
+        this.addMove(mv);
+        return mv;
     }
 
     public void wasHit(Move mv){
