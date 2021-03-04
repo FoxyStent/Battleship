@@ -39,6 +39,7 @@ public class  Ship{
         this.orientation = or;
     }
 
+    /*
     public int getHitPoints(){
         return this.HitPoints;
     }
@@ -46,6 +47,7 @@ public class  Ship{
     public int getSinkPoints(){
         return this.SinkPoints;
     }
+    */
 
     public int isHit(Move move){
         int ret = 0;
@@ -63,7 +65,6 @@ public class  Ship{
                         move.setHit();
                         if (this.gotSunk()) {
                             ret = this.SinkPoints;
-                            cells[Y-StartingY].sunkShip();
                             move.setSunkShip(true);
                         }
                         ret += this.HitPoints;
@@ -101,6 +102,7 @@ public class  Ship{
             }
         System.out.println(Name + " got Destroyed.");
         this.State = "Sunk";
+        sinkShip();
 
         return true;
     }
@@ -119,6 +121,13 @@ public class  Ship{
 
     public void setTile(int pos, GridTile c){
         this.cells[pos] = c;
+    }
+
+    private void sinkShip(){
+        for (GridTile c: cells){
+            System.out.println(c.x);
+            c.sunkShip();
+        }
     }
 
     @Override

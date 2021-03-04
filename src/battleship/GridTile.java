@@ -36,7 +36,7 @@ public class GridTile extends StackPane {
 
     public GridTile(int i, int j, boolean enemy){
         super();
-        this.getStyleClass().clear();
+        //this.getStyleClass().clear();
         //this.getStyleClass().add("grid-tile");
         super.setMinSize(30.0, 30.0);
         setBackground(new Background(new BackgroundFill(Color.CYAN, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -50,7 +50,6 @@ public class GridTile extends StackPane {
         else
             setStyle("-fx-border-width: 1px 0px 0px 1px; -fx-border-color:black black black black");
         if (enemy) {
-            System.out.println("set listeners on " + i + " " + j);
             setOnMouseEntered(mouseEvent -> setBackground(new Background(new BackgroundFill(Color.rgb(0, 100, 100, 0.7), CornerRadii.EMPTY, Insets.EMPTY))));
             setOnMouseExited(mouseEvent -> setBackground(new Background(new BackgroundFill(Color.CYAN, CornerRadii.EMPTY, Insets.EMPTY))));
         }
