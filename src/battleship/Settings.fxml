@@ -2,11 +2,21 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="300.0" maxWidth="400.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="battleship.Settings">
-   <Label layoutX="117.0" layoutY="101.0" text="Enemy Scenario ID" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="100.0" />
-   <Label layoutX="119.0" layoutY="40.0" text="Player Scenario ID" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="40.0" />
-   <Button layoutX="133.0" layoutY="196.0" mnemonicParsing="false" onAction="#Validate" text="Validate and Continue" />
-   <TextField fx:id="p" layoutX="230.0" layoutY="36.0" prefHeight="25.0" prefWidth="38.0" />
-   <TextField fx:id="e" layoutX="230.0" layoutY="96.0" prefHeight="25.0" prefWidth="38.0" />
+<AnchorPane maxHeight="300.0" maxWidth="600.0" prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="battleship.Settings">
+   <Button layoutX="110.0" layoutY="216.0" mnemonicParsing="false" onAction="#Validate" text="Validate and Continue" />
+   <TextField fx:id="p" layoutX="328.0" layoutY="69.0" prefHeight="25.0" prefWidth="134.0" />
+   <TextField fx:id="e" layoutX="328.0" layoutY="118.0" prefHeight="25.0" prefWidth="134.0" />
+   <Button layoutX="328.0" layoutY="216.0" mnemonicParsing="false" onAction="#back" prefHeight="25.0" prefWidth="134.0" text="Cancel" />
+   <Region layoutX="101.0" layoutY="114.0" prefHeight="33.0" prefWidth="175.0" style="-fx-background-color: rgba(255,255,255,0.7);" />
+   <Region layoutX="101.0" layoutY="65.0" prefHeight="33.0" prefWidth="175.0" style="-fx-background-color: rgba(255,255,255,0.7);" />
+   <Label layoutX="110.0" layoutY="122.0" text="Enemy Scenario ID" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="122.0">
+      <font>
+         <Font name="Gill Sans Ultra Bold" size="13.0" />
+      </font></Label>
+   <Label layoutX="111.0" layoutY="73.0" text="Player Scenario ID" AnchorPane.leftAnchor="111.0" AnchorPane.topAnchor="73.0">
+      <font>
+         <Font name="Gill Sans Ultra Bold" size="13.0" />
+      </font></Label>
 </AnchorPane>

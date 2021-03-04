@@ -344,6 +344,10 @@ public class GameGridController implements Initializable {
         }
     }
 
+    public void mainMenuBut(ActionEvent actionEvent) throws IOException {
+        mainMenu();
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Now Running Initializing");
@@ -401,4 +405,6 @@ public class GameGridController implements Initializable {
         });
 
     }
+
+
 }
