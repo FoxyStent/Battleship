@@ -7,11 +7,13 @@ public class Move {
     public int PointsAwarded;
     boolean sunkShip;
     boolean hit;
+    String shipType;
 
     public Move(int x, int y){
         this.Bomb = new Pair<>(x, y);
         sunkShip = false;
         hit = false;
+        shipType = "Nothing";
     }
 
     public Pair<Integer, Integer> getBomb() {
@@ -30,16 +32,24 @@ public class Move {
         return this.Bomb.getValue();
     }
 
+    public boolean isSunkShip() {
+        return sunkShip;
+    }
+
     public void setSunkShip(boolean sunkShip) {
         this.sunkShip = sunkShip;
+    }
+
+    public boolean isHit() {
+        return hit;
     }
 
     public void setHit(){
         this.hit = true;
     }
 
-    public boolean isSunkShip() {
-        return sunkShip;
+    public String getShipType() {
+        return shipType;
     }
 
     @Override

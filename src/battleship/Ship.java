@@ -1,6 +1,7 @@
 package battleship;
 
 import battleship.exce.OversizeException;
+import javafx.scene.layout.GridPane;
 
 import java.util.Arrays;
 
@@ -15,12 +16,14 @@ public class  Ship{
     public int orientation;
     public String Name;
     public boolean []Hits;
+    private GridTile []cells;
 
     public Ship(int HP, int SP, int s, String Nam){
         this.HitPoints = HP;
         this.SinkPoints = SP;
         this.size = s;
         Hits = new boolean[this.size];
+        this.cells = new GridTile[this.size];
         this.State = "Untouched";
         this.Name = Nam;
         this.hpLeft = s;
@@ -36,6 +39,7 @@ public class  Ship{
         this.orientation = or;
     }
 
+    /*
     public int getHitPoints(){
         return this.HitPoints;
     }
@@ -43,6 +47,7 @@ public class  Ship{
     public int getSinkPoints(){
         return this.SinkPoints;
     }
+    */
 
     public int isHit(Move move){
         int ret = 0;
@@ -53,8 +58,10 @@ public class  Ship{
                 if (this.StartingY <= Y && this.StartingY + this.size > Y) {
                     if (!Hits[Y - StartingY]) {
                         Hits[Y - StartingY] = true;
+                        cells[Y-StartingY].hitShip();
                         this.hpLeft--;
                         this.State = "Hit";
+                        move.shipType = Name;
                         move.setHit();
                         if (this.gotSunk()) {
                             ret = this.SinkPoints;
@@ -70,10 +77,13 @@ public class  Ship{
                 if (this.StartingX <= X && this.StartingX + this.size > X){
                     if(!Hits[X-StartingX]) {
                         Hits[X - StartingX] = true;
+                        cells[X - StartingX].hitShip();
                         this.hpLeft--;
                         this.State = "Hit";
+                        move.shipType = Name;
                         move.setHit();
                         if (this.gotSunk()) {
+                            cells[X - StartingX].sunkShip();
                             ret = this.SinkPoints;
                             move.setSunkShip(true);
                         }
@@ -92,6 +102,7 @@ public class  Ship{
             }
         System.out.println(Name + " got Destroyed.");
         this.State = "Sunk";
+        sinkShip();
 
         return true;
     }
@@ -106,6 +117,17 @@ public class  Ship{
 
     public int getHpLeft() {
         return hpLeft;
+    }
+
+    public void setTile(int pos, GridTile c){
+        this.cells[pos] = c;
+    }
+
+    private void sinkShip(){
+        for (GridTile c: cells){
+            System.out.println(c.x);
+            c.sunkShip();
+        }
     }
 
     @Override
