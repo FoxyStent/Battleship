@@ -388,6 +388,8 @@ public class GameGridController implements Initializable {
                     if (show) {
                         Color color = Color.ANTIQUEWHITE;
                         cell.setStyle("-fx-background-color: #" + color.toString().substring(2,8) + " ; -fx-border-color: black");
+                    }
+                    else{
                         cell.setOnMouseEntered(mouseEvent -> cell.setBackground(new Background(new BackgroundFill(Color.rgb(0, 100, 100, 0.7), CornerRadii.EMPTY, Insets.EMPTY))));
                         cell.setOnMouseExited(mouseEvent -> cell.setBackground(new Background(new BackgroundFill(Color.CYAN, CornerRadii.EMPTY, Insets.EMPTY))));
                     }
