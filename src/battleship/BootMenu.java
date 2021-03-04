@@ -129,9 +129,11 @@ public class BootMenu{
     public void settingsEdit(ActionEvent actionEvent) throws Exception {
         Stage set = new Stage();
 
+
         set.initModality(Modality.APPLICATION_MODAL);
+        set.initOwner(root.getScene().getWindow());
         set.setTitle("Settings");
-        set.setMinWidth(400);
+        set.setMinWidth(600);
         set.setMinHeight(300);
 
         StackPane sp = new StackPane();
@@ -141,10 +143,11 @@ public class BootMenu{
         imgView.fitWidthProperty().bind(set.widthProperty());
         imgView.fitHeightProperty().bind(set.heightProperty());
         sp.getChildren().addAll(imgView, root);
-        set.setMinWidth(400);
+        set.setMinWidth(600);
         set.setMinHeight(300);
         set.setTitle("Settings");
         Scene scene = new Scene(sp, 600, 300);
+        set.sizeToScene();
         set.setScene(scene);
         set.show();
 

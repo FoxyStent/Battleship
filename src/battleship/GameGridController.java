@@ -185,6 +185,7 @@ public class GameGridController implements Initializable {
         Stage set = new Stage();
 
         set.initModality(Modality.APPLICATION_MODAL);
+        set.initOwner(stg);
         set.setTitle("Settings");
         set.setMinWidth(400);
         set.setMinHeight(300);
@@ -199,7 +200,8 @@ public class GameGridController implements Initializable {
         set.setMinWidth(400);
         set.setMinHeight(300);
         set.setTitle("Settings");
-        Scene scene = new Scene(sp, 800, 600);
+        Scene scene = new Scene(sp, 600, 300);
+        set.sizeToScene();
         set.setScene(scene);
         set.show();
     }

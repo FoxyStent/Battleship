@@ -6,13 +6,22 @@ import battleship.exce.OverlapTilesException;
 import battleship.exce.OversizeException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -182,6 +191,8 @@ public class Settings{
         }
         pId = Integer.parseInt(p.getText());
 
+        BootMenu.playerScen=pId;
+
         String path = "src/battleship/medialab/player_"  + pId +".txt";
         File PlayerDescription = new File(path);
         if (PlayerDescription.length() == 0){
@@ -220,6 +231,8 @@ public class Settings{
         }
         eId = Integer.parseInt(e.getText());
 
+        BootMenu.enemyScen = eId;
+
         String path = "src/battleship/medialab/enemy_"  + eId + ".txt";
         File PlayerDescription = new File(path);
         if (PlayerDescription.length() == 0){
@@ -250,16 +263,105 @@ public class Settings{
         return true;
     }
 
-    public void Validate(ActionEvent actionEvent) {
+    public void canBePlaced() throws FileNotFoundException, OversizeException {
+        String path;
+        path = "src/battleship/medialab/enemy_";
+        if (eId == -1)
+            path += "default.txt";
+        else
+            path += eId + ".txt";
+        File PlayerDescription = new File(path);
+        Scanner reader = new Scanner(PlayerDescription);
+        String[] tokens;
+        while (reader.hasNextLine()) {
+            String data = reader.nextLine();
+            tokens = data.split(",");
+            int x = Integer.parseInt(tokens[1]) + 1;
+            int y = Integer.parseInt(tokens[2]) + 1;
+            int or = Integer.parseInt(tokens[3]);
+            switch (tokens[0]) {
+                case "1": {
+                    Ship carrier = new Carrier();
+                    carrier.place(x, y, or);
+                    continue;
+                }
+                case "2": {
+                    Ship battleship = new Battleship();
+                    battleship.place(x, y, or);
+                    continue;
+                }
+                case "3": {
+                    Ship cruiser = new Cruiser();
+                    cruiser.place(x, y, or);
+                    continue;
+                }
+                case "4": {
+                    Ship submarine = new Submarine();
+                    submarine.place(x, y, or);
+                    continue;
+                }
+                case "5": {
+                    Ship destroyer = new Destroyer();
+                    destroyer.place(x, y, or);
+                }
+            }
+        }
+        reader.close();
+    }
+
+    private void startGame() throws IOException {
+        try {
+            canBePlaced();
+        } catch (OversizeException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Oversized Ship");
+            alert.setHeaderText("Error on placing ships");
+            alert.setContentText("It seems that " + e.getMessage() + "\n Please fix the problem and try again.");
+            alert.showAndWait();
+            return;
+        }
+
+        ((Stage) e.getScene().getWindow()).close();
+        Stage main = ((Stage) ((Stage) e.getScene().getWindow()).getOwner());
+
+        StackPane sp = new StackPane();
+        GridPane game = FXMLLoader.load(getClass().getResource("GameGrid.fxml"));
+
+        Image img = new Image(new FileInputStream("src/battleship/assets/978648.jpg"));
+        ImageView imgView= new ImageView(img);
+        imgView.fitWidthProperty().bind(main.widthProperty());
+        imgView.fitHeightProperty().bind(main.heightProperty());
+        imgView.setOpacity(0.5);
+
+        Region reg = new Region();
+        reg.setPrefHeight(600);
+        reg.setPrefWidth(800);
+        reg.setDisable(true);
+        reg.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+        reg.setOpacity(0.0);
+
+        sp.getChildren().addAll(imgView, game, reg);
+        main.setScene(new Scene(sp, 800, 600));
+        main.sizeToScene();
+        main.setMinWidth(800);
+        main.setMinHeight(600);
+    }
+
+    public void Validate(ActionEvent actionEvent) throws IOException {
         if(validatePlayer() && validateEnemy()) {
-            BootMenu.playerScen = pId;
-            BootMenu.enemyScen = eId;
-            ((Stage) ((Node) actionEvent.getTarget()).getScene().getWindow()).close();
+            startGame();
         }
     }
 
-
     public void back(ActionEvent actionEvent) {
         ((Stage) ((Node) actionEvent.getTarget()).getScene().getWindow()).close();
+    }
+
+    public void defaults(ActionEvent actionEvent) throws IOException {
+        eId = -1;
+        pId = -1;
+        BootMenu.enemyScen=-1;
+        BootMenu.playerScen=-1;
+        startGame();
     }
 }
