@@ -60,6 +60,10 @@ public class GameGridController implements Initializable {
     //TODO When an enemy hits a ship he has to search at the nearby cells. As of now, enemy searchs nearby cells only for a round. Have to Search until the ship is destroyed.
     //TODO When player plays find a cool "Wait for opponent to play" animation or else the NPC move is instantaneous and player doesnt know.
 
+    /**
+     * @return True if the game has reached the end conditions
+     * @throws IOException if game is over and fxml files are not found when player selects what he wants
+     */
     public boolean checkEndgame() throws IOException {
         boolean ships = (player.getShipsLeft() == 0) || (enemy.getShipsLeft() == 0);
         boolean turns = (playerTurns == 40) && (enemyTurns == 40);
@@ -71,14 +75,14 @@ public class GameGridController implements Initializable {
         return false;
     }
 
-    public static void pause(int ms) {
-        try {
-            Thread.sleep(ms);
-        } catch (InterruptedException e) {
-            System.err.format("IOException: %s%n", e);
-        }
-    }
-
+    /**
+     * A function to perform the enemy move.
+     * By calling makeNpcMove() gets a Move from MovePredictor of NPC class and checks if its valid.
+     * Repeats until it got a valid Move.
+     * It updates the grid with placeBomb() and checks if it hit a player's ship with incomingBomb().
+     * It then updates the enemy stats.
+     * Finally, calls checkEndgame() to check if the game ended.
+     */
     public void enemyMove(){
         Move enemyMove;
         enemyTurns++;
@@ -113,6 +117,18 @@ public class GameGridController implements Initializable {
 
     }
 
+    /**This Function performs the Player Move.
+     * With it's parameters creates a Move. It then checks if the cell-target
+     * has already been bombed and if yes it informs the player with a Warning Alert.
+     * When called with a non-hit cell it "saves" the Move for the Last 5
+     * moves functionality and then checks if it hit a ship.
+     * Then it updates the stats with new values, creates a new window for waiting animation
+     * and finally calls enemyMove()
+     *
+     * @param x row number of cell-target
+     * @param y column number of cell-target
+     * @throws IOException if game is over and fxml files are not found when player selects what he wants
+     */
     public void dropTheBomb(int x, int y) throws IOException {
         GridTile cell = (GridTile) rightGrid.getChildren().get(20 + (x-1)*10 + (y-1));
 
@@ -165,7 +181,13 @@ public class GameGridController implements Initializable {
         }
     }
 
-    public void getCoords(ActionEvent actionEvent) throws IOException {
+    /**This is function is called when the Drop Bomb button is pressed.
+     * It gets the cell-target coordinates, checks if are inside the grid and the calls
+     * dropTheBomb() with those parameters
+     *
+     * @throws IOException if 1 of the 2 Text Fields for cell-target coordinates is empty.
+     */
+    public void getCoords() throws IOException {
         if (X_coord.getText().equals("") || Y_coord.getText().equals("")){
             Alert coordAlert = new Alert(Alert.AlertType.ERROR, "Please Enter Coordinates Values", ButtonType.CLOSE);
             coordAlert.show();
@@ -181,11 +203,24 @@ public class GameGridController implements Initializable {
         dropTheBomb(x,y);
     }
 
-    public void startBut(ActionEvent actionEvent) throws IOException {
+
+    /**This function is called when Start Menu Item is selected.
+     * It restarts the game.
+     *
+     * @throws IOException if GameGrid.fxml file or Background image is missing.
+     */
+    public void startBut() throws IOException {
         playAgain();
     }
 
-    public void loadBut(ActionEvent actionEvent) throws IOException {
+
+    /**This function is called when Load Menu Item is selected.
+     * It opens Settings Menu on a new Window
+     * so the player can choose new Scenarios for the game.
+     *
+     * @throws IOException if Settings.fxml file or Background image is missing.
+     */
+    public void loadBut() throws IOException {
         Stage set = new Stage();
 
         set.initModality(Modality.APPLICATION_MODAL);
@@ -210,11 +245,20 @@ public class GameGridController implements Initializable {
         set.show();
     }
 
-    public void exitBut(ActionEvent actionEvent) {
+    /**
+     * This Function is called when Exit Menu Item is selected.
+     * It exits the application.
+     */
+    public void exitBut() {
         Platform.exit();
     }
 
-    public void enemyShipsBut(ActionEvent actionEvent) throws IOException {
+    /**
+     * This Function is called when Enemy Ships Menu Item is selected.
+     * It opens a new Window and shows information about Enemy's Ships State
+     * @throws IOException if EnemyShips.fxml file is missing
+     */
+    public void enemyShipsBut() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("EnemyShips.fxml"));
         GridPane root = loader.load();
         Scene scene = new Scene(root, 400, 300);
@@ -225,6 +269,42 @@ public class GameGridController implements Initializable {
         EnemyShips controller = loader.getController();
         controller.setEnemy(enemy);
         popup.showAndWait();
+    }
+
+    /**
+     * This function is called when Main Menu Menu Item is selected.
+     * It opens Main Menu on current window.
+     *
+     * @throws IOException if BootMenu.fxml or Background Image is missing
+     */
+    public void mainMenuBut() throws IOException {
+        mainMenu();
+    }
+
+    /**
+     * This Function is called when Player Shots Menu Item is selected.
+     * It opens a new window with information about Player's Last 5 Moves
+     * It uses private function showStats for this and sets Player as the Desired player
+     */
+    public void playerShotsBut() {
+        try {
+            showStats(player);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This Function is called when Enemy Shots Menu Item is selected.
+     * It opens a new window with information about Enemy's Last 5 Moves
+     * It uses private function showStats for this and sets Enemy as the Desired player
+     */
+    public void enemyShotsBut() {
+        try {
+            showStats(enemy);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void showStats(Player pl) throws IOException {
@@ -242,19 +322,11 @@ public class GameGridController implements Initializable {
         popup.showAndWait();
     }
 
-    public void playerShotsBut(ActionEvent actionEvent) {
+    private static void pause(int ms) {
         try {
-            showStats(player);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void enemyShotsBut(ActionEvent actionEvent) {
-        try {
-            showStats(enemy);
-        } catch (IOException e) {
-            e.printStackTrace();
+            Thread.sleep(ms);
+        } catch (InterruptedException e) {
+            System.err.format("IOException: %s%n", e);
         }
     }
 
@@ -356,10 +428,6 @@ public class GameGridController implements Initializable {
                 }
             }
         }
-    }
-
-    public void mainMenuBut(ActionEvent actionEvent) throws IOException {
-        mainMenu();
     }
 
     @Override
