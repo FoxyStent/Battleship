@@ -1,7 +1,6 @@
 package battleship;
 
 import battleship.exce.OversizeException;
-import javafx.scene.layout.GridPane;
 
 import java.util.Arrays;
 
@@ -38,16 +37,6 @@ public class  Ship{
         this.StartingY = Y1;
         this.orientation = or;
     }
-
-    /*
-    public int getHitPoints(){
-        return this.HitPoints;
-    }
-
-    public int getSinkPoints(){
-        return this.SinkPoints;
-    }
-    */
 
     public int isHit(Move move){
         int ret = 0;
@@ -125,7 +114,6 @@ public class  Ship{
 
     private void sinkShip(){
         for (GridTile c: cells){
-            System.out.println(c.x);
             c.sunkShip();
         }
     }

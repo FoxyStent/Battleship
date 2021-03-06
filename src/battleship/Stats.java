@@ -6,7 +6,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.util.LinkedList;
@@ -14,28 +13,28 @@ import java.util.LinkedList;
 public class Stats {
 
     @FXML
-    GridPane grid;
+    private GridPane grid;
 
     @FXML
-    Label move1;
+    private Label move1;
     @FXML
-    Label move2;
+    private Label move2;
     @FXML
-    Label move3;
+    private Label move3;
     @FXML
-    Label move4;
+    private Label move4;
     @FXML
-    Label move5;
+    private Label move5;
     @FXML
-    HBox out1;
+    private HBox out1;
     @FXML
-    HBox out2;
+    private HBox out2;
     @FXML
-    HBox out3;
+    private HBox out3;
     @FXML
-    HBox out4;
+    private HBox out4;
     @FXML
-    HBox out5;
+    private HBox out5;
 
 
 
@@ -53,12 +52,12 @@ public class Stats {
                 mvs[i].setText("(" + mv.getX() + "," + mv.getY() + ")");
                 if (mv.hit) {
                     String hit = mv.getShipType();
-                    outcomes[i].setStyle("-fx-background-color: green");
+                    outcomes[i].setStyle("-fx-background-color: green; -fx-border-width: 1 0 1 1; -fx-border-color: black;");
                     ((Label) (outcomes[i].getChildren().get(0))).setText("Hit " + hit);
                 }
                 else{
                     String hit = mv.getShipType();
-                    outcomes[i].setStyle("-fx-background-color: red");
+                    outcomes[i].setStyle("-fx-background-color: red; -fx-border-width: 1 0 1 1; -fx-border-color: black;");
                     ((Label) (outcomes[i].getChildren().get(0))).setText("Hit " + hit);
                 }
             }

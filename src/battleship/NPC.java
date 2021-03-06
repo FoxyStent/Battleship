@@ -33,29 +33,4 @@ public class NPC extends Player{
         predictor.invalidMove();
     }
 
-    public Move closeHit(){
-        return tryNext.pop();
-    }
-
-    public Move randomMove(){
-        Random rand = new Random();
-        int X = rand.nextInt(9) + 1;
-        int Y = rand.nextInt(9) + 1;
-        Move mv = new Move(X,Y);
-        this.addMove(mv);
-        return mv;
-    }
-
-    public void wasHit(Move mv){
-        tryNext.add(0,new Move(mv.getX(), mv.getY()+1));
-        System.out.println("added" + mv.getX() +  mv.getY()+1);
-        tryNext.add(0,new Move(mv.getX()+1, mv.getY()));
-        tryNext.add(0,new Move(mv.getX(), mv.getY()-1));
-        tryNext.add(0,new Move(mv.getX()-1, mv.getY()));
-    }
-
-    public void sunkShip(){
-        tryNext.clear();
-        System.out.println("Cleared Hits");
-    }
 }

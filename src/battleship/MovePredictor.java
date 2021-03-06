@@ -16,7 +16,6 @@ public class MovePredictor {
     Set<Integer> hits;
 
     public MovePredictor(){
-        System.out.println("Called Constructor");
         hitCounts = 0;
         lastHit = null;
         firstHit = null;
@@ -32,7 +31,6 @@ public class MovePredictor {
     }
 
     public void processLastMove(Move mv){
-        System.out.println("Called processLastMove");
         if (mv.hit) {
             hits.add(mv.getX()*10 + mv.getY());
             if (firstHit == null)
@@ -85,21 +83,18 @@ public class MovePredictor {
     }
 
     private void addFirstHit(Move mv){
-        System.out.println("Called addFirstHit");
         firstHit = mv;
         hitCounts++;
         addAllAdjacent(mv);
     }
 
     private void addLastHit(Move mv){
-        System.out.println("Called addLastHit");
         lastHit = mv;
         hitCounts++;
         updatePredictions();
     }
 
     private void clearPredictor(){
-        System.out.println("Called clearPredictor");
         firstHit = null;
         lastHit = null;
         hitCounts = 0;
@@ -112,7 +107,6 @@ public class MovePredictor {
     }
 
     private void updateOrientation(Move mv){
-        System.out.println("Called updateOrientation");
         if (firstHit != null) {
             int dX = firstHit.getX() - mv.getX();
             int dY = firstHit.getY() - mv.getY();
@@ -130,15 +124,17 @@ public class MovePredictor {
     }
 
     private void addAllAdjacent(Move mv){
-        System.out.println("Called addAllAdjacent");
-        predictions.add(new Pair<>(new Move(firstHit.getX(), firstHit.getY()+1), "D"));
-        predictions.add(new Pair<>(new Move(firstHit.getX()+1, firstHit.getY()), "R"));
-        predictions.add(new Pair<>(new Move(firstHit.getX()-1, firstHit.getY()), "L"));
-        predictions.add(new Pair<>(new Move(firstHit.getX(), firstHit.getY()-1), "U"));
+        if (firstHit.getY() + 1 < 11)
+            predictions.add(new Pair<>(new Move(firstHit.getX(), firstHit.getY()+1), "D"));
+        if (firstHit.getX() + 1 < 11)
+            predictions.add(new Pair<>(new Move(firstHit.getX()+1, firstHit.getY()), "R"));
+        if (firstHit.getY() - 1 > 0)
+            predictions.add(new Pair<>(new Move(firstHit.getX()-1, firstHit.getY()), "L"));
+        if (firstHit.getY() - 1 > 0)
+            predictions.add(new Pair<>(new Move(firstHit.getX(), firstHit.getY()-1), "U"));
     }
 
     private void updatePredictions(){
-        System.out.println("Called updatePredictions");
         if(orientation.equals("L/R")){
             if (validDirections.get("R"))
                 predictions.add(new Pair<>(new Move(firstHit.getX()+hitCounts, firstHit.getY()), "R"));

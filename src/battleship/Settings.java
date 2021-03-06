@@ -15,14 +15,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Settings{
@@ -50,7 +47,7 @@ public class Settings{
                     for (int i=0; i<5; i++){
                         if (or == 2) {
                             if (x+i>9)
-                                throw new OversizeException("Carrier Ship is out of Grid");
+                                throw new OversizeException("Ship gets out of Grid.Carrier ship exceeds the grid horizontally");
                             if (fakeGrid[x + i][y] != 0)
                                 throw new OverlapTilesException("Overlapping happens at " + (x + i) + "," + y);
                             else
@@ -58,7 +55,7 @@ public class Settings{
                         }
                         else {
                             if (y+i>9){
-                                throw new OversizeException("Carrier Ship is out of Grid");
+                                throw new OversizeException("Ship gets out of Grid.Carrier ship exceeds the grid vertically");
                             }
                             if (fakeGrid[x][y + i] != 0)
                                 throw new OverlapTilesException("Overlapping happens at " + (x + i) + "," + y);
@@ -72,7 +69,7 @@ public class Settings{
                     for (int i=0; i<4; i++){
                         if (or == 2) {
                             if (x+i>9)
-                                throw new OversizeException("Battleship Ship is out of Grid");
+                                throw new OversizeException("Ship gets out of Grid.Carrier ship exceeds the grid horizontally");
                             if (fakeGrid[x + i][y] != 0)
                                 throw new OverlapTilesException("Overlapping happens at " + (x + i) + "," + y);
                             else
@@ -80,7 +77,7 @@ public class Settings{
                         }
                         else {
                             if (y+i>9)
-                                throw new OversizeException("Battleship Ship is out of Grid");
+                                throw new OversizeException("Ship gets out of Grid.Battleship exceeds the grid vertically");
                             if (fakeGrid[x][y + i] != 0)
                                 throw new OverlapTilesException("Overlapping happens at " + (x + i) + "," + y);
                             else
@@ -93,7 +90,7 @@ public class Settings{
                     for (int i=0; i<3; i++){
                         if (or == 2) {
                             if (x+i>9)
-                                throw new OversizeException("Cruiser Ship is out of Grid");
+                                throw new OversizeException("Ship gets out of Grid.Carrier exceeds the grid horizontally");
                             if (fakeGrid[x + i][y] != 0)
                                 throw new OverlapTilesException("Overlapping happens at " + (x + i) + "," + y);
                             else
@@ -101,7 +98,7 @@ public class Settings{
                         }
                         else {
                             if (y+i>9)
-                                throw new OversizeException("Cruiser Ship is out of Grid");
+                                throw new OversizeException("Ship gets out of Grid.Carrier exceeds the grid vertically");
                             if (fakeGrid[x][y + i] != 0)
                                 throw new OverlapTilesException("Overlapping happens at " + (x + i) + "," + y);
                             else
@@ -114,7 +111,7 @@ public class Settings{
                     for (int i=0; i<3; i++){
                         if (or == 2) {
                             if (x+i>9)
-                                throw new OversizeException("Submarine Ship is out of Grid");
+                                throw new OversizeException("Ship gets out of Grid.Submarine exceeds the grid horizontally");
                             if (fakeGrid[x + i][y] != 0)
                                 throw new OverlapTilesException("Overlapping happens at " + (x + i) + "," + y);
                             else
@@ -122,7 +119,7 @@ public class Settings{
                         }
                         else {
                             if (y+i>9)
-                                throw new OversizeException("Submarine Ship is out of Grid");
+                                throw new OversizeException("Ship gets out of Grid.Submarine exceeds the grid vertically");
                             if (fakeGrid[x][y + i] != 0)
                                 throw new OverlapTilesException("Overlapping happens at " + (x + i) + "," + y);
                             else
@@ -135,7 +132,7 @@ public class Settings{
                     for (int i=0; i<2; i++){
                         if (or == 2) {
                             if (x+i>9)
-                                throw new OversizeException("Destroyer Ship is out of Grid");
+                                throw new OversizeException("Ship gets out of Grid.Destroyer exceeds the grid horizontally");
                             if (fakeGrid[x + i][y] != 0)
                                 throw new OverlapTilesException("Overlapping happens at " + (x + i) + "," + y);
                             else
@@ -143,7 +140,7 @@ public class Settings{
                         }
                         else {
                             if (y+i>9)
-                                throw new OversizeException("Destroyer Ship is out of Grid");
+                                throw new OversizeException("Ship gets out of Grid.Destroyer exceeds the grid vertically");
                             if (fakeGrid[x][y + i] != 0)
                                 throw new OverlapTilesException("Overlapping happens at " + (x + i) + "," + y);
                             else
@@ -162,23 +159,23 @@ public class Settings{
 
         for(int i=0; i<10; i++) {
             for (int j = 0; j<10; j++) {
-                System.out.println(i + " " + j);
                 int curr = fakeGrid[i][j];
                 shipsSeen[curr]++;
                 if (i==9 && j==9)
                     break;
-                else if (i==9)
-                    if (curr != fakeGrid[i][j+1] && curr !=0 && fakeGrid[i][j+1] != 0)
-                        throw new AdjacentTilesException("There is a ship Adjacent to " + i + "," + j);
-                else if (j==9)
-                    if (curr != fakeGrid[i+1][j] && curr !=0 && fakeGrid[i+1][j] != 0)
-                        throw new AdjacentTilesException("There is a ship Adjacent to " + i + "," + j);
-                else if ((curr != fakeGrid[i + 1][j] || curr != fakeGrid[i][j + 1]) && curr!=0 && fakeGrid[i + 1][j] != 0 && fakeGrid[i][j + 1] !=0  )
-                    throw new AdjacentTilesException("There is a ship Adjacent to " + i + "," + j);
+                else if (i==9){
+                    if (curr != fakeGrid[i][j + 1] && curr != 0 && fakeGrid[i][j + 1] != 0)
+                        throw new AdjacentTilesException("There is a ship Adjacent to Ship Type Number " + curr);
+                }
+                else if (j==9){
+                    if (curr != fakeGrid[i + 1][j] && curr != 0 && fakeGrid[i + 1][j] != 0)
+                        throw new AdjacentTilesException("There is a ship Adjacent to Ship Type Number " + curr);
+                }
+                else if ((curr != fakeGrid[i + 1][j] || curr != fakeGrid[i][j + 1]) && curr!=0 && fakeGrid[i + 1][j] != 0 && fakeGrid[i][j + 1] !=0)
+                    throw new AdjacentTilesException("There is a ship Adjacent to Ship Type Number " + curr);
 
             }
         }
-        System.out.println(Arrays.toString(shipsSeen));
         if (shipsSeen[1] != 5 || shipsSeen[2] != 4 || shipsSeen[3] != 3 || shipsSeen[4] != 3 || shipsSeen[5] != 2)
             throw new InvalidCountException("There has been a duplicate ship or ships are missing");
     }
@@ -190,8 +187,6 @@ public class Settings{
             return false;
         }
         pId = Integer.parseInt(p.getText());
-
-        BootMenu.playerScen=pId;
 
         String path = "src/battleship/medialab/player_"  + pId +".txt";
         File PlayerDescription = new File(path);
@@ -207,19 +202,35 @@ public class Settings{
             Alert fileNotFound = new Alert(Alert.AlertType.ERROR, "Player Scenario was not Found.\nPlease try again!");
             fileNotFound.showAndWait();
             return false;
-        } catch (OverlapTilesException | OversizeException overlapTilesException){
+        } catch (OverlapTilesException overlapTilesException){
             Alert overlapping = new Alert(Alert.AlertType.ERROR, overlapTilesException.getMessage() + " on Player Scenario\nPlease try again!");
+            overlapping.setHeaderText("Overlapping Happens");
             overlapping.showAndWait();
+            return false;
+        } catch (OversizeException oversizeException){
+            String[] error = oversizeException.getMessage().split("\\.");
+            Alert oversize = new Alert(Alert.AlertType.ERROR);
+            oversize.setHeaderText(error[0]);
+            oversize.setContentText(error[1] + " on Player Scenario");
+            oversize.showAndWait();
             return false;
         }
 
         try {
             checkGrid(fakeGrid);
-        } catch (AdjacentTilesException | InvalidCountException someException) {
-            Alert something = new Alert(Alert.AlertType.ERROR, someException.getMessage() + " on Player Scenario\nPlease try again!");
+        } catch (AdjacentTilesException adjacentTilesException) {
+            Alert something = new Alert(Alert.AlertType.ERROR, adjacentTilesException.getMessage() + " on Player Scenario\nPlease try again!");
+            something.setHeaderText("Adjacent Ships Error");
             something.showAndWait();
             return false;
+        } catch (InvalidCountException invalidCountException){
+            Alert count = new Alert(Alert.AlertType.ERROR);
+            count.setHeaderText("Duplicate/Missing Ships Error");
+            count.setContentText("The above error occured on Player Scenario.\nPlease try again!");
+            count.showAndWait();
+            return false;
         }
+        BootMenu.playerScen=pId;
         return true;
     }
 
@@ -230,8 +241,6 @@ public class Settings{
             return false;
         }
         eId = Integer.parseInt(e.getText());
-
-        BootMenu.enemyScen = eId;
 
         String path = "src/battleship/medialab/enemy_"  + eId + ".txt";
         File PlayerDescription = new File(path);
@@ -247,19 +256,35 @@ public class Settings{
             Alert fileNotFound = new Alert(Alert.AlertType.ERROR, "Player Scenario was not Found.\nPlease try again!");
             fileNotFound.showAndWait();
             return false;
-        } catch (OverlapTilesException | OversizeException overlapTilesException){
+        } catch (OverlapTilesException overlapTilesException){
             Alert overlapping = new Alert(Alert.AlertType.ERROR, overlapTilesException.getMessage() + " on Enemy Scenario\nPlease try again!");
+            overlapping.setHeaderText("Overlapping Happens");
             overlapping.showAndWait();
+            return false;
+        } catch (OversizeException oversizeException){
+            String[] error = oversizeException.getMessage().split("\\.");
+            Alert oversize = new Alert(Alert.AlertType.ERROR);
+            oversize.setHeaderText(error[0]);
+            oversize.setContentText(error[1] + " on Enemy Scenario");
+            oversize.showAndWait();
             return false;
         }
 
         try {
             checkGrid(fakeGrid);
-        } catch (AdjacentTilesException | InvalidCountException someException) {
-            Alert something = new Alert(Alert.AlertType.ERROR, someException.getMessage() + " on Enemy Scenario\nPlease try again!");
+        } catch (AdjacentTilesException adjacentTilesException) {
+            Alert something = new Alert(Alert.AlertType.ERROR, adjacentTilesException.getMessage() + " on Enemy Scenario\nPlease try again!");
+            something.setHeaderText("Adjacent Ships Error");
             something.showAndWait();
             return false;
+        } catch (InvalidCountException invalidCountException){
+            Alert count = new Alert(Alert.AlertType.ERROR);
+            count.setHeaderText("Duplicate/Missing Ships Error");
+            count.setContentText("The above error occured on Enemy Scenario.\nPlease try again!");
+            count.showAndWait();
+            return false;
         }
+        BootMenu.enemyScen = eId;
         return true;
     }
 

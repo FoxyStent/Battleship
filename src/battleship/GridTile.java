@@ -5,27 +5,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 
-/*
-public class GridTile extends Rectangle {
-    public int x;
-    public int y;
-    private boolean hasShip;
-    public boolean isHit;
-    public boolean isEnemy;
-    public Color color;
-
-    public GridTile(int i, int j, boolean enemy){
-        super(30,30, Color.CYAN);
-        this.setStroke(Color.BLACK);
-        this.x = i;
-        this.y = j;
-        this.isHit = false;
-        this.isEnemy = enemy;
-        this.color = Color.BLUE;
-    }
-*/
 public class GridTile extends StackPane {
     public int x;
     public int y;
@@ -36,8 +16,6 @@ public class GridTile extends StackPane {
 
     public GridTile(int i, int j, boolean enemy){
         super();
-        //this.getStyleClass().clear();
-        //this.getStyleClass().add("grid-tile");
         super.setMinSize(30.0, 30.0);
         setBackground(new Background(new BackgroundFill(Color.CYAN, CornerRadii.EMPTY, Insets.EMPTY)));
         if (j==10)
@@ -60,10 +38,6 @@ public class GridTile extends StackPane {
         this.ship = null;
     }
 
-    public void placeShips(int part, String name){
-
-    }
-
     public void setHasShip(boolean s){
         this.hasShip = s;
         this.setOnMouseEntered(mouseEvent -> {});
@@ -75,9 +49,7 @@ public class GridTile extends StackPane {
         Circle bomb = new Circle(10);
         bomb.setFill(Paint.valueOf("fff"));
         bomb.setStroke(Paint.valueOf("000"));
-        //bomb.setStrokeWidth(0.5);
         this.getChildren().add(bomb);
-        //this.setStyle("-fx-background-color: red");
     }
 
     public void hitShip(){

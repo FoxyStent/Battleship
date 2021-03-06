@@ -4,161 +4,155 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.2"
-          xmlns:fx="http://javafx.com/fxml/1" fx:controller="battleship.EnemyShips">
+<GridPane prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="battleship.EnemyShips">
     <columnConstraints>
-        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES"/>
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <Pane style="-fx-background-color: rgb(66,101,214);" GridPane.columnIndex="0" GridPane.rowIndex="0">
         <Label alignment="CENTER" layoutX="40.0" layoutY="9.0" text="Ships">
          <font>
-             <Font name="Gill Sans Ultra Bold" size="18.0"/>
+             <Font name="Gill Sans Ultra Bold" size="18.0" />
          </font>
         </Label>
     </Pane>
     <Pane style="-fx-background-color: rgb(66,101,214);" GridPane.columnIndex="1" GridPane.rowIndex="0">
         <Label layoutX="40.0" layoutY="9.0" text="State">
          <font>
-             <Font name="Gill Sans Ultra Bold" size="18.0"/>
+             <Font name="Gill Sans Ultra Bold" size="18.0" />
          </font>
         </Label>
     </Pane>
     <Pane style="-fx-background-color: rgb(66,101,214);" GridPane.columnIndex="2" GridPane.rowIndex="0">
         <Label layoutX="52.0" layoutY="9.0" text="HP">
          <font>
-             <Font name="Gill Sans Ultra Bold" size="18.0"/>
+             <Font name="Gill Sans Ultra Bold" size="18.0" />
          </font>
         </Label>
     </Pane>
     <Pane style="-fx-background-color: rgb(66,101,214);" GridPane.columnIndex="0" GridPane.rowIndex="2">
         <Label alignment="CENTER" layoutX="35.0" layoutY="10.0" text="Carrier">
          <font>
-             <Font name="Gill Sans Ultra Bold" size="14.0"/>
+             <Font name="Gill Sans Ultra Bold" size="14.0" />
          </font>
         </Label>
     </Pane>
     <HBox fx:id="paneCar" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
         <Label alignment="CENTER" layoutY="10.0" text="Untouched" textFill="WHITE">
          <font>
-             <Font name="Gill Sans Ultra Bold" size="14.0"/>
+             <Font name="Gill Sans Ultra Bold" size="14.0" />
          </font>
         </Label>
     </HBox>
     <Pane style="-fx-background-color: rgb(66,101,214);" GridPane.columnIndex="2" GridPane.rowIndex="2">
         <Label fx:id="hpCar" layoutX="54.0" layoutY="10.0" text="HP">
          <font>
-             <Font name="Gill Sans Ultra Bold" size="14.0"/>
+             <Font name="Gill Sans Ultra Bold" size="14.0" />
          </font>
         </Label>
     </Pane>
     <Pane style="-fx-background-color: rgb(200,200,200);" GridPane.columnIndex="0" GridPane.rowIndex="3">
         <Label alignment="CENTER" layoutX="22.0" layoutY="10.0" text="Battleship">
          <font>
-             <Font name="Gill Sans Ultra Bold" size="14.0"/>
+             <Font name="Gill Sans Ultra Bold" size="14.0" />
          </font>
         </Label>
     </Pane>
     <HBox fx:id="paneBat" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3">
         <Label alignment="CENTER" layoutX="44.0" layoutY="10.0" text="State" textFill="WHITE">
             <font>
-                <Font name="Gill Sans Ultra Bold" size="14.0"/>
+                <Font name="Gill Sans Ultra Bold" size="14.0" />
             </font>
         </Label>
     </HBox>
     <Pane style="-fx-background-color: rgb(200,200,200);" GridPane.columnIndex="2" GridPane.rowIndex="3">
         <Label fx:id="hpBat" layoutX="54.0" layoutY="10.0" text="HP">
          <font>
-             <Font name="Gill Sans Ultra Bold" size="14.0"/>
+             <Font name="Gill Sans Ultra Bold" size="14.0" />
          </font>
         </Label>
     </Pane>
     <Pane style="-fx-background-color: rgb(66,101,214);" GridPane.columnIndex="0" GridPane.rowIndex="4">
         <Label alignment="CENTER" layoutX="34.0" layoutY="9.0" text="Cruiser">
          <font>
-             <Font name="Gill Sans Ultra Bold" size="14.0"/>
+             <Font name="Gill Sans Ultra Bold" size="14.0" />
          </font>
         </Label>
     </Pane>
     <HBox fx:id="paneCru" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="4">
         <Label alignment="CENTER" layoutX="44.0" layoutY="9.0" text="State" textFill="WHITE">
             <font>
-                <Font name="Gill Sans Ultra Bold" size="14.0"/>
+                <Font name="Gill Sans Ultra Bold" size="14.0" />
             </font>
         </Label>
     </HBox>
     <Pane style="-fx-background-color: rgb(66,101,214);" GridPane.columnIndex="2" GridPane.rowIndex="4">
         <Label fx:id="hpCru" layoutX="54.0" layoutY="10.0" text="HP">
             <font>
-                <Font name="Gill Sans Ultra Bold" size="14.0"/>
+                <Font name="Gill Sans Ultra Bold" size="14.0" />
             </font>
         </Label>
     </Pane>
     <Pane style="-fx-background-color: rgb(200,200,200);" GridPane.columnIndex="0" GridPane.rowIndex="5">
         <Label alignment="CENTER" layoutX="19.0" layoutY="9.0" text="Submarine">
          <font>
-             <Font name="Gill Sans Ultra Bold" size="14.0"/>
+             <Font name="Gill Sans Ultra Bold" size="14.0" />
          </font>
         </Label>
     </Pane>
     <HBox fx:id="paneSub" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="5">
         <Label alignment="CENTER" layoutX="44.0" layoutY="9.0" text="State" textFill="WHITE">
             <font>
-                <Font name="Gill Sans Ultra Bold" size="14.0"/>
+                <Font name="Gill Sans Ultra Bold" size="14.0" />
             </font>
         </Label>
     </HBox>
     <Pane style="-fx-background-color: rgb(200,200,200);" GridPane.columnIndex="2" GridPane.rowIndex="5">
         <Label fx:id="hpSub" layoutX="54.0" layoutY="9.0" text="HP">
             <font>
-                <Font name="Gill Sans Ultra Bold" size="14.0"/>
+                <Font name="Gill Sans Ultra Bold" size="14.0" />
             </font>
         </Label>
     </Pane>
     <Pane style="-fx-background-color: rgb(66,101,214);" GridPane.columnIndex="0" GridPane.rowIndex="6">
         <Label alignment="CENTER" layoutX="23.0" layoutY="9.0" text="Destroyer">
          <font>
-             <Font name="Gill Sans Ultra Bold" size="14.0"/>
+             <Font name="Gill Sans Ultra Bold" size="14.0" />
          </font>
         </Label>
     </Pane>
     <HBox fx:id="paneDes" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="6">
         <Label alignment="CENTER" layoutX="44.0" layoutY="9.0" text="State" textFill="WHITE">
             <font>
-                <Font name="Gill Sans Ultra Bold" size="14.0"/>
+                <Font name="Gill Sans Ultra Bold" size="14.0" />
             </font>
         </Label>
     </HBox>
     <Pane style="-fx-background-color: rgb(66,101,214);" GridPane.columnIndex="2" GridPane.rowIndex="6">
         <Label fx:id="hpDes" layoutX="54.0" layoutY="10.0" text="HP">
             <font>
-                <Font name="Gill Sans Ultra Bold" size="14.0"/>
+                <Font name="Gill Sans Ultra Bold" size="14.0" />
             </font>
         </Label>
     </Pane>
-    <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: rgb(200,200,200);" GridPane.rowIndex="7"/>
-    <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: rgb(200,200,200);" GridPane.columnIndex="1"
-          GridPane.rowIndex="7">
-        <Button alignment="CENTER" layoutX="49.0" layoutY="6.0" mnemonicParsing="false" onAction="#closeWin"
-                text="OK!"/>
+    <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: rgb(200,200,200);" GridPane.rowIndex="7" />
+    <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: rgb(200,200,200);" GridPane.columnIndex="1" GridPane.rowIndex="7">
+        <Button alignment="CENTER" layoutX="44.0" layoutY="6.0" mnemonicParsing="false" onAction="#closeWin" text="Close" />
     </Pane>
-    <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: rgb(200,200,200);" GridPane.columnIndex="2"
-          GridPane.rowIndex="7"/>
-    <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: rgb(200,200,200);" GridPane.rowIndex="1"/>
-    <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: rgb(200,200,200);" GridPane.columnIndex="1"
-          GridPane.rowIndex="1"/>
-    <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: rgb(200,200,200);" GridPane.columnIndex="2"
-          GridPane.rowIndex="1"/>
+    <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: rgb(200,200,200);" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+    <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: rgb(200,200,200);" GridPane.rowIndex="1" />
+    <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: rgb(200,200,200);" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+    <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: rgb(200,200,200);" GridPane.columnIndex="2" GridPane.rowIndex="1" />
 
 </GridPane>

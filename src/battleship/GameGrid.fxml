@@ -18,7 +18,7 @@
         <RowConstraints maxHeight="1.7976931348623157E308" minHeight="60.0" percentHeight="10.0" vgrow="NEVER" />
     </rowConstraints>
     <Separator maxHeight="1.7976931348623157E308" orientation="VERTICAL" prefHeight="540.0" prefWidth="5.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.rowSpan="2" GridPane.valignment="CENTER" />
-    <GridPane fx:id="leftMenu" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="1">
+    <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="1">
         <columnConstraints>
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" percentWidth="32.0" />
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" percentWidth="32.0" />
@@ -40,7 +40,7 @@
         <Label text="Your Grid" GridPane.columnIndex="1" GridPane.rowIndex="3" />
         <Separator prefWidth="200.0" valignment="BOTTOM" GridPane.columnSpan="2147483647" GridPane.rowIndex="4" />
     </GridPane>
-    <GridPane fx:id="rightMenu" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" GridPane.rowIndex="1">
+    <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" GridPane.rowIndex="1">
         <columnConstraints>
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" percentWidth="31.0" />
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" percentWidth="31.0" />
@@ -142,7 +142,7 @@
             <HBox.margin>
                 <Insets />
             </HBox.margin>
-            <Button mnemonicParsing="false" onAction="#dropTheBomb" text="Drop Bomb">
+            <Button mnemonicParsing="false" onAction="#getCoords" text="Drop Bomb">
                 <VBox.margin>
                     <Insets top="22.0" />
                 </VBox.margin>

@@ -1,6 +1,5 @@
 package battleship;
 
-import battleship.*;
 import battleship.exce.OverlapTilesException;
 import battleship.exce.OversizeException;
 import javafx.application.Platform;
@@ -9,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -20,8 +18,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -56,8 +52,8 @@ public class GameGridController implements Initializable {
 
     private Player player;
     private NPC enemy;
-    private int playerTurns = 1;
-    private int enemyTurns = 1;
+    private int playerTurns = 0;
+    private int enemyTurns = 0;
     private int yourHits = 0;
     private int enemyHits = 0;
 
@@ -66,7 +62,7 @@ public class GameGridController implements Initializable {
 
     public boolean checkEndgame() throws IOException {
         boolean ships = (player.getShipsLeft() == 0) || (enemy.getShipsLeft() == 0);
-        boolean turns = (playerTurns == 39) || (enemyTurns == 39);
+        boolean turns = (playerTurns == 40) && (enemyTurns == 40);
         if (ships || turns){
             disableGrid();
             showGameOver();
@@ -104,30 +100,26 @@ public class GameGridController implements Initializable {
 
         currPoints = Integer.parseInt(enemyScore.getText());
         enemyScore.setText(Integer.toString(currPoints+awardedPoints));
+        enemy.setScore(currPoints+awardedPoints);
         enemyPercLabel.setText((100 * enemyHits) / enemyTurns +"%");
         enemyTurnsLabel.setText(Integer.toString(playerTurns));
         if (enemyMove.hit)
             enemyHits++;
+        try {
+            checkEndgame();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
 
     }
 
-    public void dropTheBomb(ActionEvent actionEvent) throws IOException {
-        if (X_coord.getText().equals("") || Y_coord.getText().equals("")){
-            Alert coordAlert = new Alert(Alert.AlertType.ERROR, "Please Enter Coordinates Values", ButtonType.CLOSE);
-            coordAlert.show();
-            return;
-        }
-        int x = Integer.parseInt(X_coord.getText());
-        int y = Integer.parseInt(Y_coord.getText());
-        if (x <= 0 || x>10 || y <= 0 || y > 10){
-            Alert coordAlert = new Alert(Alert.AlertType.ERROR, "Please Enter correct Coordinates Values", ButtonType.CLOSE);
-            coordAlert.show();
-            return;
-        }
+    public void dropTheBomb(int x, int y) throws IOException {
         GridTile cell = (GridTile) rightGrid.getChildren().get(20 + (x-1)*10 + (y-1));
 
         if (cell.isHit) {
-            Alert droppedThere = new Alert(Alert.AlertType.WARNING, "You have already Bombed that Cell\nPlease choose another one.");
+            Alert droppedThere = new Alert(Alert.AlertType.WARNING);
+            droppedThere.setHeaderText("You have already Bombed that Cell.");
+            droppedThere.setContentText("Please choose another one.");
             droppedThere.showAndWait();
             return;
         }
@@ -142,8 +134,9 @@ public class GameGridController implements Initializable {
 
         int currPoints = Integer.parseInt(yourScore.getText());
         yourScore.setText(Integer.toString(currPoints+awardedPoints));
-        yourPercLabel.setText((100 * yourHits) / playerTurns +"%");
+        player.setScore(currPoints+awardedPoints);
         playerTurns++;
+        yourPercLabel.setText((100 * yourHits) / playerTurns +"%");
         yourTurnsLabel.setText(Integer.toString(playerTurns));
         if(!checkEndgame()) {
 
@@ -159,7 +152,7 @@ public class GameGridController implements Initializable {
             waitStage.show();
 
             //Changing modality on the main stage
-            Scene mainScene = ((Node) (actionEvent.getTarget())).getScene();
+            Scene mainScene = stg.getScene();
             StackPane game = (StackPane) mainScene.getRoot();
             Region veil = (Region) game.getChildren().get(2);
             veil.setDisable(false);
@@ -168,13 +161,24 @@ public class GameGridController implements Initializable {
                 veil.setDisable(true);
                 veil.setOpacity(0);
                 enemyMove();
-                try {
-                    checkEndgame();
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }
             }));
         }
+    }
+
+    public void getCoords(ActionEvent actionEvent) throws IOException {
+        if (X_coord.getText().equals("") || Y_coord.getText().equals("")){
+            Alert coordAlert = new Alert(Alert.AlertType.ERROR, "Please Enter Coordinates Values", ButtonType.CLOSE);
+            coordAlert.show();
+            return;
+        }
+        int x = Integer.parseInt(X_coord.getText());
+        int y = Integer.parseInt(Y_coord.getText());
+        if (x <= 0 || x>10 || y <= 0 || y > 10){
+            Alert coordAlert = new Alert(Alert.AlertType.ERROR, "Please Enter correct Coordinates Values", ButtonType.CLOSE);
+            coordAlert.show();
+            return;
+        }
+        dropTheBomb(x,y);
     }
 
     public void startBut(ActionEvent actionEvent) throws IOException {
@@ -257,7 +261,15 @@ public class GameGridController implements Initializable {
     private void showGameOver() throws IOException {
         ButtonType mainMenuBut = new ButtonType("Back to Main Menu");
         ButtonType playAgainBut = new ButtonType("Play Again!");
-        Alert gameover = new Alert(Alert.AlertType.INFORMATION, "Game Over!. GG", mainMenuBut, playAgainBut);
+        Alert gameover = new Alert(Alert.AlertType.NONE, "Game Over!", mainMenuBut, playAgainBut);
+        String txt = "";
+        if (this.enemy.getShipsLeft() == 0 || this.enemy.getScore() < this.player.getScore())
+            txt = "You Won. Nice Played";
+
+        else if (this.player.getShipsLeft() == 0 || this.enemy.getScore() > this.player.getScore())
+            txt = "You Lost. Try your luck again";
+
+        gameover.setHeaderText(txt);
         gameover.initStyle(StageStyle.UNDECORATED);
         Optional<ButtonType> res = gameover.showAndWait();
         ButtonType resChoice = res.orElse(null);
@@ -367,8 +379,11 @@ public class GameGridController implements Initializable {
                 GridTile friendlyTile = new GridTile(i, j, false);
                 GridTile enemyTile = new GridTile(i, j, true);
                 enemyTile.setOnMouseClicked(mouseEvent -> {
-                    X_coord.setText(String.valueOf(enemyTile.x));
-                    Y_coord.setText(String.valueOf(enemyTile.y));
+                    try {
+                        dropTheBomb(enemyTile.x, enemyTile.y);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 });
                 leftGrid.add(friendlyTile, j, i);
                 rightGrid.add(enemyTile, j, i);
@@ -395,12 +410,14 @@ public class GameGridController implements Initializable {
             //do something cool maybe.
             double rand = Math.random();
             if (rand > 0.5){
-                Alert enemy = new Alert(Alert.AlertType.INFORMATION, "Enemy Plays");
+                Alert enemy = new Alert(Alert.AlertType.INFORMATION);
+                enemy.setHeaderText("Enemy gets to play first :(");
                 enemy.showAndWait();
                 enemyMove();
             }
             else{
-                Alert enemy = new Alert(Alert.AlertType.INFORMATION, "You are playing");
+                Alert enemy = new Alert(Alert.AlertType.INFORMATION);
+                enemy.setHeaderText("You get to play first!");
                 enemy.showAndWait();
             }
             stg = (Stage) mainGrid.getScene().getWindow();
